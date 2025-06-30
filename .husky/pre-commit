@@ -1,0 +1,4 @@
+yarn lint:fix
+yarn typecheck
+yarn format
+
