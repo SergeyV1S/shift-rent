@@ -5,6 +5,7 @@ import { cn } from "@shared/lib";
 const typographyVariants = cva("font-inter text-base-text tracking-normal", {
   variants: {
     variant: {
+      title_h1: "leading-full font-firaSans text-brand-primary text-sm font-semibold",
       title_h2: "text-2xl leading-8 font-bold",
       title_h3: "text-xl leading-6 font-semibold",
       button_semibold: "text-base leading-6 font-semibold",

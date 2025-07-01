@@ -1,20 +1,27 @@
 @import "tailwindcss";
 
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
 @theme inline {
   --color-bg-primary: var(--bg-primary);
   --color-brand-primary: var(--brand-primary);
+  --color-indicator-attention: var(--indicator-attention);
   --color-indicator-error: var(--indicator-error);
   --color-border-light: var(--border-light);
   --color-base-text: var(--base-text);
-  --color-content06: var(--content-06);
-  --color-content05: var(--content-05);
-  --color-content03: var(--content-03);
+  --color-content-06: var(--content-06);
+  --color-content-05: var(--content-05);
+  --color-content-03: var(--content-03);
   --radius-input: 8px;
-  --radius-btn: 16px;
+  --spacing-full: 100%;
 }
 
 :root {
   --indicator-error: rgba(246, 76, 76, 1);
+  --indicator-attention: rgba(253, 212, 66, 1);
   --brand-primary: rgba(219, 0, 25, 1);
   --bg-primary: rgba(243, 244, 246, 1);
   --border-light: rgba(206, 210, 218, 1);
