@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme inline {
+  --color-bg-primary: var(--bg-primary);
+  --color-brand-primary: var(--brand-primary);
+  --color-indicator-error: var(--indicator-error);
+  --color-border-light: var(--border-light);
+  --color-base-text: var(--base-text);
+  --color-content06: var(--content-06);
+  --color-content05: var(--content-05);
+  --color-content03: var(--content-03);
+  --radius-input: 8px;
+  --radius-btn: 16px;
+}
+
+:root {
+  --indicator-error: rgba(246, 76, 76, 1);
+  --brand-primary: rgba(219, 0, 25, 1);
+  --bg-primary: rgba(243, 244, 246, 1);
+  --border-light: rgba(206, 210, 218, 1);
+  --base-text: rgba(20, 28, 36, 1);
+  --content-06: rgba(151, 161, 175, 1);
+  --content-05: rgba(99, 112, 131, 1);
+  --content-03: rgba(52, 64, 81, 1);
+}
