@@ -7,6 +7,7 @@ import { Button, Input, Typography } from "@shared/ui";
 
 import { signInFormSchema } from "../lib";
 import { useAuth, useAuthStore } from "../model";
+import { CodeResend } from "./CodeResend";
 
 export const SignInForm = () => {
   const { phone, isLoading } = useAuthStore();
@@ -49,6 +50,7 @@ export const SignInForm = () => {
       <Button type='submit' className='w-full' disabled={isLoading}>
         Войти
       </Button>
+      <CodeResend />
     </form>
   );
 };

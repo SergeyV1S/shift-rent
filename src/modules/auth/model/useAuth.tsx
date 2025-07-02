@@ -11,7 +11,7 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const { otpsControllerCreateOtp } = getOtps();
   const { usersControllerSignin } = getUsers();
-  const { setValue } = useAuthStore();
+  const { phone, setValue } = useAuthStore();
 
   const onOtpsFormSubmit = async (data: TOtpsFormSchema) => {
     const formatedPhone = formatPhone(data.phone);
@@ -19,9 +19,9 @@ export const useAuth = () => {
     try {
       setValue("isLoading", true);
 
-      await otpsControllerCreateOtp({ phone: formatedPhone });
+      const result = await otpsControllerCreateOtp({ phone: formatedPhone });
 
-      setValue("phone", formatedPhone);
+      setValue(["phone", "retryDelay"], [formatedPhone, result.data.retryDelay]);
     } catch (error) {
       handleError(error);
     } finally {
@@ -33,13 +33,13 @@ export const useAuth = () => {
     try {
       setValue("isLoading", true);
 
-      const res = await usersControllerSignin({
+      const result = await usersControllerSignin({
         ...data,
         code: +data.code
       });
 
       setValue(["isAuth", "phone"], [true, ""]);
-      localStorage.setItem(ACCESS_TOKEN, res.data.token);
+      localStorage.setItem(ACCESS_TOKEN, result.data.token);
 
       navigate(PATHS.HOME);
     } catch (error) {
@@ -54,5 +54,7 @@ export const useAuth = () => {
     setValue("isAuth", false);
   };
 
-  return { onOtpsFormSubmit, onSignInFormSubmit, logout };
+  const retry = async () => onOtpsFormSubmit({ phone });
+
+  return { onOtpsFormSubmit, onSignInFormSubmit, logout, retry };
 };

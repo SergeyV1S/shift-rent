@@ -5,6 +5,7 @@ import { ACCESS_TOKEN } from "@shared/constants";
 interface IAuthState {
   isAuth: boolean;
   phone: string;
+  retryDelay?: number;
   isLoading?: boolean;
 }
 
@@ -25,6 +26,8 @@ export const useAuthStore = create<TAuthStore>((set) => ({
       field.map((f, i) => set({ [f]: value[i] }));
     } else if (!Array.isArray(field) && !Array.isArray(value)) {
       set({ [field]: value });
+    } else {
+      console.error("Невозможное действие");
     }
   }
 }));
