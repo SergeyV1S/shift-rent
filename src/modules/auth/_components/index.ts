@@ -1,2 +1,2 @@
-export * from "./CodeInput";
-export * from "./PhoneInput";
+export * from "./OtpsForm";
+export * from "./SignInForm";

@@ -19,15 +19,15 @@
     "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.0.0",
-    "effector": "^23.3.0",
-    "effector-react": "^23.3.0",
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.59.0",
     "react-number-format": "^5.4.4",
     "react-router": "^7.6.3",
-    "zod": "^3.25.67"
+    "sonner": "^2.0.5",
+    "zod": "^3.25.67",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
