@@ -1,4 +1,4 @@
-# Shift-Delivery
+# 🚗 Shift-Rent
 
 **[Перейти на веб-приложение](https://shift-rent.v1sdev.ru/)**
 

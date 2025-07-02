@@ -1,8 +1,9 @@
-import axios from "axios";
+import Axios from "axios";
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { ACCESS_TOKEN } from "@shared/constants";
 
-export const api = axios.create({
+export const api = Axios.create({
   baseURL: process.env.BASE_API_URL
 });
 
@@ -26,3 +27,16 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const customInstance = <T>(
+  config: AxiosRequestConfig,
+  options?: AxiosRequestConfig
+): Promise<AxiosResponse<T>> => {
+  const source = Axios.CancelToken.source();
+  const promise = api({
+    ...config,
+    ...options,
+    cancelToken: source.token
+  });
+  return promise;
+};
