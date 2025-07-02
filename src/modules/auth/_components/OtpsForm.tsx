@@ -6,11 +6,11 @@ import { PatternFormat } from "react-number-format";
 import { Button, Input, Typography } from "@shared/ui";
 
 import { otpsFormSchema } from "../lib";
-import { useAuthStore, useSignIn } from "../model";
+import { useAuth, useAuthStore } from "../model";
 
 export const OtpsForm = () => {
   const { isLoading } = useAuthStore();
-  const { onOtpsFormSubmit } = useSignIn();
+  const { onOtpsFormSubmit } = useAuth();
 
   const otpsForm = useForm({
     resolver: zodResolver(otpsFormSchema),

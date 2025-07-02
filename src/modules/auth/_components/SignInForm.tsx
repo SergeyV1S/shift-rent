@@ -6,11 +6,11 @@ import { PatternFormat } from "react-number-format";
 import { Button, Input, Typography } from "@shared/ui";
 
 import { signInFormSchema } from "../lib";
-import { useAuthStore, useSignIn } from "../model";
+import { useAuth, useAuthStore } from "../model";
 
 export const SignInForm = () => {
   const { phone, isLoading } = useAuthStore();
-  const { onSignInFormSubmit } = useSignIn();
+  const { onSignInFormSubmit } = useAuth();
 
   const signInForm = useForm({
     resolver: zodResolver(signInFormSchema),

@@ -7,7 +7,7 @@ import { formatPhone, handleError } from "@shared/helpers";
 import type { TOtpsFormSchema, TSignInFormSchema } from "../lib";
 import { useAuthStore } from "./store";
 
-export const useSignIn = () => {
+export const useAuth = () => {
   const navigate = useNavigate();
   const { otpsControllerCreateOtp } = getOtps();
   const { usersControllerSignin } = getUsers();
@@ -38,7 +38,7 @@ export const useSignIn = () => {
         code: +data.code
       });
 
-      setValue("isAuth", true);
+      setValue(["isAuth", "phone"], [true, ""]);
       localStorage.setItem(ACCESS_TOKEN, res.data.token);
 
       navigate(PATHS.HOME);
@@ -49,5 +49,10 @@ export const useSignIn = () => {
     }
   };
 
-  return { onOtpsFormSubmit, onSignInFormSubmit };
+  const logout = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    setValue("isAuth", false);
+  };
+
+  return { onOtpsFormSubmit, onSignInFormSubmit, logout };
 };

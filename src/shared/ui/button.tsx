@@ -29,16 +29,22 @@ const buttonVariants = cva(
   }
 );
 
-interface IButtonProps
-  extends React.ComponentProps<"button">,
-    VariantProps<typeof buttonVariants> {}
+interface IButtonProps extends React.ComponentProps<"button">, VariantProps<typeof buttonVariants> {
+  typographyVariant?: VariantProps<typeof typographyVariants>["variant"];
+}
 
-const Button = ({ variant, className, size, ...props }: IButtonProps) => (
+const Button = ({
+  variant,
+  typographyVariant = "button_semibold",
+  className,
+  size,
+  ...props
+}: IButtonProps) => (
   <button
     data-slot='button'
     className={cn(
       buttonVariants({ variant, size, className }),
-      typographyVariants({ variant: "button_semibold" })
+      typographyVariants({ variant: typographyVariant })
     )}
     {...props}
   />

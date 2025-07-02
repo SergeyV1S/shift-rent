@@ -10,7 +10,7 @@ export const InputBase = ({ className, component: Component = "input", ...props 
   <Component
     data-slot='input'
     className={cn(
-      "rounded-input placeholder:text-content-05 disabled:bg-bg-primary focus-visible:border-brand-primary border-border-light focus-visible:ring-brand-primary transition-[ring, border] box-border h-12 w-full border px-2 py-4 duration-200 outline-none focus-visible:ring-2",
+      "rounded-input placeholder:text-content-05 disabled:bg-bg-primary disabled:text-content-05 focus-visible:border-brand-primary border-border-light focus-visible:ring-brand-primary transition-[ring, border] box-border h-12 w-full border p-3 duration-200 outline-none focus-visible:ring-2",
       "aria-invalid:ring-indicator-error aria-invalid:border-indicator-error aria-invalid:text-indicator-error",
       typographyVariants(),
       className
