@@ -16,7 +16,7 @@ const typographyVariants = cva("font-inter text-base-text tracking-normal", {
     }
   },
   defaultVariants: {
-    variant: "paragraph_16_medium"
+    variant: "paragraph_16_regular"
   }
 });
 

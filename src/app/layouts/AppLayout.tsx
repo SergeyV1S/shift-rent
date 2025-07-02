@@ -5,7 +5,7 @@ import { Header } from "../Header";
 export const AppLayout = () => (
   <>
     <Header />
-    <main className='container'>
+    <main className='container mt-12'>
       <Outlet />
     </main>
   </>
