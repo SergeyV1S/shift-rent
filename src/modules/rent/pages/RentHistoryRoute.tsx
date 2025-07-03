@@ -4,13 +4,13 @@ import type { RouteObject } from "react-router";
 import { PATHS } from "@shared/constants";
 import { Spinner } from "@shared/ui";
 
-import { SignInPage } from "./SignIn";
+import { RentHistoryPage } from "./RentHistory";
 
-export const createSignInRoute = (): RouteObject => ({
-  path: PATHS.SIGNIN,
+export const createRentHistoryRoute = (): RouteObject => ({
+  path: PATHS.RENT_HISTORY,
   element: (
     <Suspense fallback={<Spinner />}>
-      <SignInPage />
+      <RentHistoryPage />
     </Suspense>
   ),
   errorElement: <div className=''>Error</div>

@@ -43,7 +43,7 @@ export const Header = () => {
               <span>Профиль</span>
             </NavLink>
             <NavLink
-              to={PATHS.RESERVATION_HISTORY}
+              to={PATHS.RENT_HISTORY}
               className={({ isActive }) =>
                 cn(
                   typographyVariants(),
