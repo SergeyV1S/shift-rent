@@ -1,5 +1,7 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import type { RouteObject } from "react-router";
 
+import { PATHS } from "@shared/constants";
 import {
   Spinner,
   Table,
@@ -13,7 +15,7 @@ import {
 import { useRentHistoryStore } from "../model";
 
 export const RentHistoryPage = () => {
-  const { rentHistory, fetchRentHistory } = useRentHistoryStore();
+  const { rentHistory, isLoading, fetchRentHistory } = useRentHistoryStore();
 
   useEffect(() => {
     fetchRentHistory();
@@ -37,7 +39,7 @@ export const RentHistoryPage = () => {
           </TableCell>
         </TableHeader>
         <TableContent>
-          {rentHistory ? (
+          {!isLoading ? (
             rentHistory.map((rent) => (
               <TableRow>
                 <TableCell>{rent.carInfo.name}</TableCell>
@@ -54,3 +56,13 @@ export const RentHistoryPage = () => {
     </main>
   );
 };
+
+export const createRentHistoryRoute = (): RouteObject => ({
+  path: PATHS.RENT_HISTORY,
+  element: (
+    <Suspense fallback={<Spinner />}>
+      <RentHistoryPage />
+    </Suspense>
+  ),
+  errorElement: <div className=''>Error</div>
+});

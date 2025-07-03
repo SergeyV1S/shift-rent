@@ -4,7 +4,7 @@ import { type CarRent, getCars } from "@shared/api";
 import { handleError } from "@shared/helpers";
 
 interface IRentHistoryState {
-  rentHistory?: CarRent[];
+  rentHistory: CarRent[];
   rent?: CarRent;
   isLoading?: boolean;
 }
@@ -19,6 +19,7 @@ type TRentHistoryStore = IRentHistoryState & IRentHistoryActions;
 const carsApi = getCars();
 
 export const useRentHistoryStore = create<TRentHistoryStore>((set) => ({
+  rentHistory: [],
   setValue: (field, value) => set({ [field]: value }),
   fetchRentHistory: async () => {
     try {

@@ -1,16 +1,21 @@
 import { Suspense } from "react";
+import { useParams } from "react-router";
 import type { RouteObject } from "react-router";
 
 import { PATHS } from "@shared/constants";
 import { Spinner } from "@shared/ui";
 
-import { RentHistoryPage } from "./RentHistory";
+const CarInfoPage = () => {
+  const { carId } = useParams() as { carId: string };
 
-export const createRentHistoryRoute = (): RouteObject => ({
-  path: PATHS.RENT_HISTORY,
+  return <div className=''>{carId}</div>;
+};
+
+export const createCarInfoRoute = (): RouteObject => ({
+  path: `${PATHS.HOME}:carId`,
   element: (
     <Suspense fallback={<Spinner />}>
-      <RentHistoryPage />
+      <CarInfoPage />
     </Suspense>
   ),
   errorElement: <div className=''>Error</div>

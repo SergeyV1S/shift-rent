@@ -1,9 +1,8 @@
 import { createBrowserRouter } from "react-router";
 
 import { createSignInRoute } from "@modules/auth";
+import { createCarInfoRoute, createHomeRoute } from "@modules/car";
 import { createRentHistoryRoute } from "@modules/rent";
-
-import { PATHS } from "@shared/constants";
 
 import { AppLayout } from "./layouts";
 
@@ -11,12 +10,10 @@ export const router = createBrowserRouter([
   {
     element: <AppLayout />,
     children: [
+      createHomeRoute(),
+      createCarInfoRoute(),
       createSignInRoute(),
-      createRentHistoryRoute(),
-      {
-        path: PATHS.HOME,
-        element: <div className=''>Привет</div>
-      }
+      createRentHistoryRoute()
     ]
   }
 ]);

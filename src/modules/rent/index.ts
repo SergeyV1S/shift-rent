@@ -1,1 +1,1 @@
-export * from "./pages/RentHistoryRoute";
+export * from "./pages/RentHistory";
