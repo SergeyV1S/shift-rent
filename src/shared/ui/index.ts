@@ -3,3 +3,7 @@ export * from "./typography";
 export * from "./spinner";
 export * from "./button";
 export * from "./table";
+export * from "./label";
+export * from "./searchInput";
+export * from "./select";
+export * from "./popover";

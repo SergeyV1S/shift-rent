@@ -30,3 +30,16 @@
   --content-05: rgba(99, 112, 131, 1);
   --content-03: rgba(52, 64, 81, 1);
 }
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s linear forwards;
+}

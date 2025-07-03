@@ -1,22 +1,21 @@
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import type { RouteObject } from "react-router";
 
 import { PATHS } from "@shared/constants";
 import { Spinner } from "@shared/ui";
 
-import { CarCard } from "../_components";
+import { CarCard, CarFilter } from "../_components";
 import { useCarStore } from "../model";
 
 const HomePage = () => {
-  const { cars, isLoading, fetchCars } = useCarStore();
-
-  useEffect(() => {
-    fetchCars();
-  }, []);
+  const { cars, isLoading } = useCarStore();
 
   return (
-    <main className='relative flex h-screen flex-wrap items-center justify-center gap-10'>
-      {!isLoading ? cars.map((car) => <CarCard key={car.id} {...car} />) : <Spinner />}
+    <main className='relative h-screen space-y-12'>
+      <CarFilter />
+      <section className='flex flex-wrap items-center justify-center gap-10'>
+        {!isLoading ? cars.map((car) => <CarCard key={car.id} {...car} />) : <Spinner />}
+      </section>
     </main>
   );
 };
