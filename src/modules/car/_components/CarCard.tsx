@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import type { Car } from "@shared/api";
 import { Typography, buttonVariants } from "@shared/ui";
 
-import { translateCarTransmission } from "../lib";
+import { carTransmissionTranslation } from "../constants";
 
 export const CarCard = (car: Car) => {
   const carImage = car.media.filter((image) => image.isCover)[0].url;
@@ -19,7 +19,7 @@ export const CarCard = (car: Car) => {
       <div className='space-y-8'>
         <div className='space-y-2'>
           <Typography variant='title_h3'>{car.name}</Typography>
-          <Typography>{translateCarTransmission(car.transmission)}</Typography>
+          <Typography>{carTransmissionTranslation[car.transmission]}</Typography>
         </div>
         <div className='flex items-center justify-between'>
           <Typography variant='title_h3'>{car.price} ₽</Typography>

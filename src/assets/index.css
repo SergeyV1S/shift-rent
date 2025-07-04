@@ -7,6 +7,7 @@
 
 @theme inline {
   --color-bg-primary: var(--bg-primary);
+  --color-stroke-primary: var(--stroke-primary);
   --color-brand-primary: var(--brand-primary);
   --color-indicator-attention: var(--indicator-attention);
   --color-indicator-error: var(--indicator-error);
@@ -21,6 +22,7 @@
 
 :root {
   --indicator-error: rgba(246, 76, 76, 1);
+  --stroke-primary: rgba(224, 224, 224, 1);
   --indicator-attention: rgba(253, 212, 66, 1);
   --brand-primary: rgba(219, 0, 25, 1);
   --bg-primary: rgba(243, 244, 246, 1);

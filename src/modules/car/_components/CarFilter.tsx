@@ -12,6 +12,7 @@ import { useDebouncedInput } from "@shared/hooks";
 import { cn } from "@shared/lib";
 import {
   Button,
+  ColorPicker,
   Label,
   Popover,
   RangeSlider,
@@ -23,7 +24,7 @@ import {
   Typography
 } from "@shared/ui";
 
-import { translateCarSteering, translateCarTransmission } from "../lib";
+import { carSteeringTranslation, carTransmissionTranslation } from "../constants";
 import { useCarStore, useFilterStore } from "../model";
 
 export const CarFilter = () => {
@@ -57,7 +58,7 @@ export const CarFilter = () => {
     },
     ...transmissionTypes.map((type) => ({
       value: type,
-      label: translateCarTransmission(type)
+      label: carTransmissionTranslation[type]
     }))
   ];
 
@@ -68,7 +69,7 @@ export const CarFilter = () => {
     },
     ...steeringTypes.map((type) => ({
       value: type,
-      label: translateCarSteering(type)
+      label: carSteeringTranslation[type]
     }))
   ];
 
@@ -218,6 +219,13 @@ export const CarFilter = () => {
                   до {filters.maxPrice || 0} ₽
                 </Typography>
               </div>
+            </Label>
+            <Label>
+              Цвет
+              <ColorPicker
+                selectedColor={filters.color ?? "all"}
+                onColorChange={(color) => onTabSwitch("color", color)}
+              />
             </Label>
             <Button variant='outline' className='w-2/3 max-md:w-full' onClick={resetFilters}>
               Сбросить фильтры
