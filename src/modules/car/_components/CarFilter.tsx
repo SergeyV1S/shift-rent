@@ -14,18 +14,20 @@ import {
   Button,
   Label,
   Popover,
-  PopoverContent,
-  PopoverTrigger,
   SearchInput,
   Select,
+  Tabs,
+  TabsList,
+  TabsTrigger,
   Typography
 } from "@shared/ui";
 
+import { translateCarSteering, translateCarTransmission } from "../lib";
 import { useCarStore, useFilterStore } from "../model";
 
 export const CarFilter = () => {
   const { filters, isFiltersOpen, setValue } = useFilterStore();
-  const { brands, bodyTypes, fetchCars } = useCarStore();
+  const { brands, bodyTypes, steeringTypes, transmissionTypes, fetchCars } = useCarStore();
   const [range, setRange] = useState<DateRange | undefined>();
 
   const handleRangeSelect = (selectedRange: DateRange | undefined) => {
@@ -47,6 +49,28 @@ export const CarFilter = () => {
     label: type
   }));
 
+  const transmissionTypesOptions = [
+    {
+      value: "all",
+      label: "Любой"
+    },
+    ...transmissionTypes.map((type) => ({
+      value: type,
+      label: translateCarTransmission(type)
+    }))
+  ];
+
+  const steeringTypesOptions = [
+    {
+      value: "all",
+      label: "Любой"
+    },
+    ...steeringTypes.map((type) => ({
+      value: type,
+      label: translateCarSteering(type)
+    }))
+  ];
+
   const { inputValue, handleChange } = useDebouncedInput({
     value: filters.search,
     onChange: (value) => setValue("filters", { ...filters, search: value }),
@@ -56,6 +80,15 @@ export const CarFilter = () => {
   const showCarsByFilters = () => {
     fetchCars();
     setValue("isFiltersOpen", false);
+  };
+
+  const onTabSwitch = (filter: keyof typeof filters, value: string) => {
+    const newValue = value === "all" ? undefined : value;
+
+    setValue("filters", {
+      ...filters,
+      [filter]: newValue
+    });
   };
 
   const resetFilters = () => {
@@ -82,21 +115,22 @@ export const CarFilter = () => {
           </Label>
           <Label className='space-y-1'>
             Даты аренды
-            <Popover>
-              <PopoverTrigger className='flex items-center justify-between'>
-                <Typography className='truncate opacity-70'>
-                  {formatDateRange({ ...range }) || "Выберите даты аренды"}
-                </Typography>
-                <CalendarDaysIcon className='opacity-70' />
-              </PopoverTrigger>
-              <PopoverContent>
-                <DayPicker
-                  mode='range'
-                  locale={ru}
-                  selected={range}
-                  onSelect={(d) => handleRangeSelect(d)}
-                />
-              </PopoverContent>
+            <Popover
+              placeholder={
+                <div className='flex items-center justify-between'>
+                  <Typography className='truncate'>
+                    {formatDateRange({ ...range }) || "Выберите даты аренды"}
+                  </Typography>
+                  <CalendarDaysIcon className='opacity-70' />
+                </div>
+              }
+            >
+              <DayPicker
+                mode='range'
+                locale={ru}
+                selected={range}
+                onSelect={(d) => handleRangeSelect(d)}
+              />
             </Popover>
           </Label>
           <Button variant='secondary' onClick={() => setValue("isFiltersOpen", !isFiltersOpen)}>
@@ -133,6 +167,36 @@ export const CarFilter = () => {
                 placeholder='Выберите бренд'
                 className='w-64'
               />
+            </Label>
+            <Label>
+              Руль
+              <Tabs
+                defaultValue={filters.steering || "all"}
+                onChange={(value) => onTabSwitch("steering", value)}
+              >
+                <TabsList>
+                  {steeringTypesOptions.map((option) => (
+                    <TabsTrigger key={option.value} value={option.value}>
+                      {option.label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+            </Label>
+            <Label>
+              Коробка передач
+              <Tabs
+                defaultValue={filters.transmission || "all"}
+                onChange={(value) => onTabSwitch("transmission", value)}
+              >
+                <TabsList>
+                  {transmissionTypesOptions.map((option) => (
+                    <TabsTrigger key={option.value} value={option.value}>
+                      {option.label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
             </Label>
             <Button variant='outline' className='w-2/3 max-md:w-full' onClick={resetFilters}>
               Сбросить фильтры

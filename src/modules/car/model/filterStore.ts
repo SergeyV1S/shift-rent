@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import type {
+  CarSteering,
   CarsControllerGetCarsBodyType,
   CarsControllerGetCarsBrand,
   CarsControllerGetCarsColor,
@@ -16,6 +17,7 @@ interface IFilterState {
     bodyType?: CarsControllerGetCarsBodyType;
     brand?: CarsControllerGetCarsBrand;
     color?: CarsControllerGetCarsColor;
+    steering?: CarSteering;
   };
   isFiltersOpen?: boolean;
   isLoading?: boolean;

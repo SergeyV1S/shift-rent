@@ -1,7 +1,13 @@
 import { create } from "zustand";
 
 import { getCars } from "@shared/api";
-import type { Car, CarBodyType, CarBrand } from "@shared/api";
+import type {
+  Car,
+  CarBodyType,
+  CarBrand,
+  CarSteering,
+  CarsControllerGetCarsTransmission
+} from "@shared/api";
 import { handleError } from "@shared/helpers";
 
 import { useFilterStore } from "./filterStore";
@@ -12,6 +18,8 @@ interface ICarState {
   brands: CarBrand[];
   selectedCar?: Car | string;
   isLoading?: boolean;
+  transmissionTypes: CarsControllerGetCarsTransmission[];
+  steeringTypes: CarSteering[];
 }
 
 interface ICarActions {
@@ -28,6 +36,8 @@ export const useCarStore = create<TCarStore>((set) => ({
   cars: [],
   bodyTypes: [],
   brands: [],
+  transmissionTypes: [],
+  steeringTypes: [],
   setValue: (field, value) => set({ [field]: value }),
   fetchCars: async () => {
     try {
@@ -47,13 +57,18 @@ export const useCarStore = create<TCarStore>((set) => ({
       });
 
       set((state) => {
-        const newBodyTypes = [...new Set(result.data.data.map((car) => car.bodyType))];
-        const newBrands = [...new Set(result.data.data.map((car) => car.brand))];
+        const bodyTypes = [...new Set(result.data.data.map((car) => car.bodyType))];
+        const brands = [...new Set(result.data.data.map((car) => car.brand))];
+        const steeringTypes = [...new Set(result.data.data.map((car) => car.steering))];
+        const transmissionTypes = [...new Set(result.data.data.map((car) => car.transmission))];
 
         return {
           cars: result.data.data,
-          bodyTypes: state.bodyTypes.length === 0 ? newBodyTypes : state.bodyTypes,
-          brands: state.brands.length === 0 ? newBrands : state.brands
+          bodyTypes: state.bodyTypes.length === 0 ? bodyTypes : state.bodyTypes,
+          brands: state.brands.length === 0 ? brands : state.brands,
+          steeringTypes: state.steeringTypes.length === 0 ? steeringTypes : state.steeringTypes,
+          transmissionTypes:
+            state.transmissionTypes.length === 0 ? transmissionTypes : state.transmissionTypes
         };
       });
     } catch (error) {
