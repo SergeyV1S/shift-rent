@@ -14,6 +14,7 @@ import {
   Button,
   Label,
   Popover,
+  RangeSlider,
   SearchInput,
   Select,
   Tabs,
@@ -197,6 +198,26 @@ export const CarFilter = () => {
                   ))}
                 </TabsList>
               </Tabs>
+            </Label>
+            <Label>
+              Стоимость
+              <RangeSlider
+                maxValue={filters.maxPrice || 0}
+                min={0}
+                max={10000}
+                minValue={filters.minPrice || 0}
+                onChange={(price) => {
+                  setValue("filters", { ...filters, maxPrice: price.max, minPrice: price.min });
+                }}
+              />
+              <div className='flex items-center justify-between'>
+                <Typography variant='paragraph_12_regular' className='text-content-05'>
+                  {filters.minPrice || 0} ₽
+                </Typography>
+                <Typography variant='paragraph_12_regular' className='text-content-05'>
+                  до {filters.maxPrice || 0} ₽
+                </Typography>
+              </div>
             </Label>
             <Button variant='outline' className='w-2/3 max-md:w-full' onClick={resetFilters}>
               Сбросить фильтры

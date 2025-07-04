@@ -8,3 +8,4 @@ export * from "./searchInput";
 export * from "./select";
 export * from "./popover";
 export * from "./tabs";
+export * from "./range-slider";
