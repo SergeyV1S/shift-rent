@@ -1,8 +1,8 @@
-import * as React from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 import { cn } from "@shared/lib/";
 
-import { typographyVariants } from "./typography";
+import { Label } from "./label";
 
 interface ITabsProps {
   defaultValue?: string;
@@ -12,7 +12,7 @@ interface ITabsProps {
   onChange: (value: string) => void;
 }
 
-const TabsContext = React.createContext<{
+const TabsContext = createContext<{
   activeTab: string;
   setActiveTab: (value: string) => void;
 } | null>(null);
@@ -25,11 +25,11 @@ const Tabs = ({
   children,
   ...props
 }: ITabsProps) => {
-  const [internalValue, setInternalValue] = React.useState(defaultValue);
+  const [internalValue, setInternalValue] = useState(defaultValue);
   const isControlled = controlledValue !== undefined;
   const activeTab = isControlled ? controlledValue : internalValue;
 
-  const setActiveTab = React.useCallback(
+  const setActiveTab = useCallback(
     (value: string) => {
       if (!isControlled) {
         setInternalValue(value);
@@ -71,14 +71,14 @@ interface ITabsTriggerProps extends React.ComponentProps<"button"> {
 }
 
 const TabsTrigger = ({ className, value, children, ...props }: ITabsTriggerProps) => {
-  const context = React.useContext(TabsContext);
+  const context = useContext(TabsContext);
   if (!context) {
     throw new Error("TabsTrigger must be used within a Tabs component");
   }
   const { activeTab, setActiveTab } = context;
 
   return (
-    <label className='contents'>
+    <Label>
       <input
         type='radio'
         name='tabs'
@@ -86,15 +86,13 @@ const TabsTrigger = ({ className, value, children, ...props }: ITabsTriggerProps
         checked={activeTab === value}
         onChange={() => setActiveTab(value)}
         className='absolute h-0 w-0 opacity-0'
-        aria-hidden='true'
       />
       <button
         data-slot='tabs-trigger'
         role='tab'
         aria-selected={activeTab === value}
         className={cn(
-          "transition-color rounded-2xl px-12 py-3 whitespace-nowrap data-[active=true]:bg-white",
-          typographyVariants({ variant: "paragraph_14_regular" }),
+          "transition-color cursor-pointer rounded-2xl px-12 py-3 whitespace-nowrap data-[active=true]:bg-white",
           className
         )}
         data-active={activeTab === value}
@@ -103,7 +101,7 @@ const TabsTrigger = ({ className, value, children, ...props }: ITabsTriggerProps
       >
         {children}
       </button>
-    </label>
+    </Label>
   );
 };
 

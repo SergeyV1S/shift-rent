@@ -1,22 +1,16 @@
 import { create } from "zustand";
 
-import type {
-  CarSteering,
-  CarsControllerGetCarsBodyType,
-  CarsControllerGetCarsBrand,
-  CarsControllerGetCarsColor,
-  CarsControllerGetCarsTransmission
-} from "@shared/api";
+import type { CarBodyType, CarBrand, CarColor, CarSteering, CarTransmission } from "@shared/api";
 
 interface IFilterState {
   filters: {
     search?: string;
     maxPrice?: number;
     minPrice?: number;
-    transmission?: CarsControllerGetCarsTransmission;
-    bodyType?: CarsControllerGetCarsBodyType;
-    brand?: CarsControllerGetCarsBrand;
-    color?: CarsControllerGetCarsColor;
+    transmission?: CarTransmission;
+    bodyType?: CarBodyType;
+    brand?: CarBrand;
+    color?: CarColor;
     steering?: CarSteering;
   };
   isFiltersOpen?: boolean;

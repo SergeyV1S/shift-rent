@@ -10,3 +10,4 @@ export * from "./popover";
 export * from "./tabs";
 export * from "./range-slider";
 export * from "./color-picker";
+export * from "./day-picker";

@@ -1,6 +1,7 @@
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
+import { useClickOutside } from "@shared/hooks";
 import { cn } from "@shared/lib";
 
 import { typographyVariants } from "./typography";
@@ -39,18 +40,7 @@ export const Select = ({
     onChange?.(optionValue);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  useClickOutside(selectRef, () => setIsOpen(false));
 
   return (
     <div className={cn("relative w-full", className)} ref={selectRef}>

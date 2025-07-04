@@ -1,20 +1,14 @@
-import { CalendarDaysIcon, Settings2Icon } from "lucide-react";
-import { useEffect, useState } from "react";
-
-import { ru } from "date-fns/locale";
-import { DayPicker } from "react-day-picker";
-import type { DateRange } from "react-day-picker";
-import "react-day-picker/style.css";
+import { Settings2Icon } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 import type { CarBodyType, CarBrand } from "@shared/api";
-import { formatDateRange } from "@shared/helpers";
-import { useDebouncedInput } from "@shared/hooks";
+import { useClickOutside, useDebouncedInput } from "@shared/hooks";
 import { cn } from "@shared/lib";
 import {
   Button,
   ColorPicker,
+  DayPicker,
   Label,
-  Popover,
   RangeSlider,
   SearchInput,
   Select,
@@ -25,59 +19,33 @@ import {
 } from "@shared/ui";
 
 import { carSteeringTranslation, carTransmissionTranslation } from "../constants";
+import { createOptionsWithTranslation } from "../helpers";
 import { useCarStore, useFilterStore } from "../model";
 
 export const CarFilter = () => {
   const { filters, isFiltersOpen, setValue } = useFilterStore();
   const { brands, bodyTypes, steeringTypes, transmissionTypes, fetchCars } = useCarStore();
-  const [range, setRange] = useState<DateRange | undefined>();
-
-  const handleRangeSelect = (selectedRange: DateRange | undefined) => {
-    setRange(selectedRange);
-    // setValue("filters", {
-    //   ...filters,
-    //   dateFrom: selectedRange.from,
-    //   dateTo: selectedRange.to
-    // });
-  };
-
-  const bodyTypesOptions = bodyTypes.map((type) => ({
-    value: type,
-    label: type
-  }));
-
-  const brandsOptions = brands.map((type) => ({
-    value: type,
-    label: type
-  }));
-
-  const transmissionTypesOptions = [
-    {
-      value: "all",
-      label: "Любой"
-    },
-    ...transmissionTypes.map((type) => ({
-      value: type,
-      label: carTransmissionTranslation[type]
-    }))
-  ];
-
-  const steeringTypesOptions = [
-    {
-      value: "all",
-      label: "Любой"
-    },
-    ...steeringTypes.map((type) => ({
-      value: type,
-      label: carSteeringTranslation[type]
-    }))
-  ];
-
   const { inputValue, handleChange } = useDebouncedInput({
     value: filters.search,
     onChange: (value) => setValue("filters", { ...filters, search: value }),
     delay: 400
   });
+  const advancedFiltersRef = useRef<HTMLDivElement>(null);
+
+  const isShowButtomDisabled = Object.values(filters).filter((filter) => filter).length === 0;
+
+  const bodyTypesOptions = createOptionsWithTranslation(bodyTypes);
+  const brandsOptions = createOptionsWithTranslation(brands);
+  const transmissionTypesOptions = createOptionsWithTranslation(
+    transmissionTypes,
+    true,
+    carTransmissionTranslation
+  );
+  const steeringTypesOptions = createOptionsWithTranslation(
+    steeringTypes,
+    true,
+    carSteeringTranslation
+  );
 
   const showCarsByFilters = () => {
     fetchCars();
@@ -102,6 +70,8 @@ export const CarFilter = () => {
     fetchCars();
   }, [filters.search]);
 
+  useClickOutside(advancedFiltersRef, () => setValue("isFiltersOpen", false));
+
   return (
     <>
       <div className='bg-bg-primary relative w-full rounded-2xl'>
@@ -115,26 +85,7 @@ export const CarFilter = () => {
               placeholder='Поиск'
             />
           </Label>
-          <Label className='space-y-1'>
-            Даты аренды
-            <Popover
-              placeholder={
-                <div className='flex items-center justify-between'>
-                  <Typography className='truncate'>
-                    {formatDateRange({ ...range }) || "Выберите даты аренды"}
-                  </Typography>
-                  <CalendarDaysIcon className='opacity-70' />
-                </div>
-              }
-            >
-              <DayPicker
-                mode='range'
-                locale={ru}
-                selected={range}
-                onSelect={(d) => handleRangeSelect(d)}
-              />
-            </Popover>
-          </Label>
+          <DayPicker />
           <Button variant='secondary' onClick={() => setValue("isFiltersOpen", !isFiltersOpen)}>
             <Settings2Icon /> Фильтры
           </Button>
@@ -142,6 +93,7 @@ export const CarFilter = () => {
       </div>
       {isFiltersOpen && (
         <div
+          ref={advancedFiltersRef}
           className={cn(
             "border-border-light absolute top-[118px] right-0 left-0 z-50 rounded-2xl border bg-white",
             isFiltersOpen ? "animate-slide-down" : "hidden"
@@ -231,7 +183,11 @@ export const CarFilter = () => {
               Сбросить фильтры
             </Button>
             <div className='w-full text-end'>
-              <Button className='w-2/3 max-md:w-full' onClick={showCarsByFilters}>
+              <Button
+                className='w-2/3 max-md:w-full'
+                onClick={showCarsByFilters}
+                disabled={isShowButtomDisabled}
+              >
                 Показать
               </Button>
             </div>

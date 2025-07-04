@@ -1,13 +1,7 @@
 import { create } from "zustand";
 
 import { getCars } from "@shared/api";
-import type {
-  Car,
-  CarBodyType,
-  CarBrand,
-  CarSteering,
-  CarsControllerGetCarsTransmission
-} from "@shared/api";
+import type { Car, CarBodyType, CarBrand, CarSteering, CarTransmission } from "@shared/api";
 import { handleError } from "@shared/helpers";
 
 import { useFilterStore } from "./filterStore";
@@ -18,7 +12,7 @@ interface ICarState {
   brands: CarBrand[];
   selectedCar?: Car | string;
   isLoading?: boolean;
-  transmissionTypes: CarsControllerGetCarsTransmission[];
+  transmissionTypes: CarTransmission[];
   steeringTypes: CarSteering[];
 }
 
