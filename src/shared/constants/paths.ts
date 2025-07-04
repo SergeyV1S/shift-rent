@@ -4,5 +4,5 @@ export const PATHS = {
   PROFILE: "/profile",
   CAR_RESERVATION: "/car-reservation",
   REQUEST_SENT: "/request-sent",
-  RESERVATION_HISTORY: "/reservation-history"
+  RENT_HISTORY: "/rent-history"
 } as const;

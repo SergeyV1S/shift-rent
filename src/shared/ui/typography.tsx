@@ -2,7 +2,7 @@ import { type VariantProps, cva } from "class-variance-authority";
 
 import { cn } from "@shared/lib";
 
-const typographyVariants = cva("font-inter text-base-text tracking-normal", {
+const typographyVariants = cva("font-inter text-base-text tracking-normal text-inherit", {
   variants: {
     variant: {
       title_h1: "leading-full font-firaSans text-brand-primary text-sm font-semibold",
@@ -16,7 +16,7 @@ const typographyVariants = cva("font-inter text-base-text tracking-normal", {
     }
   },
   defaultVariants: {
-    variant: "paragraph_16_medium"
+    variant: "paragraph_16_regular"
   }
 });
 
