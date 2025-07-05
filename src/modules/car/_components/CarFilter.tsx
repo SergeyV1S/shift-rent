@@ -32,7 +32,7 @@ export const CarFilter = () => {
   });
   const advancedFiltersRef = useRef<HTMLDivElement>(null);
 
-  const isShowButtomDisabled = Object.values(filters).filter((filter) => filter).length === 0;
+  const isFilterButtonsDisabled = Object.values(filters).filter((filter) => filter).length === 0;
 
   const bodyTypesOptions = createOptionsWithTranslation(bodyTypes);
   const brandsOptions = createOptionsWithTranslation(brands);
@@ -179,14 +179,19 @@ export const CarFilter = () => {
                 onColorChange={(color) => onTabSwitch("color", color)}
               />
             </Label>
-            <Button variant='outline' className='w-2/3 max-md:w-full' onClick={resetFilters}>
+            <Button
+              variant='outline'
+              className='w-2/3 max-md:w-full'
+              onClick={resetFilters}
+              disabled={isFilterButtonsDisabled}
+            >
               Сбросить фильтры
             </Button>
             <div className='w-full text-end'>
               <Button
                 className='w-2/3 max-md:w-full'
                 onClick={showCarsByFilters}
-                disabled={isShowButtomDisabled}
+                disabled={isFilterButtonsDisabled}
               >
                 Показать
               </Button>
