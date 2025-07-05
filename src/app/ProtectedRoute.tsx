@@ -19,8 +19,6 @@ export const ProtectedRoute = ({ onlyUnauth }: IProtectedRouteProps) => {
     fetchUser();
   }, []);
 
-  console.log(location.state);
-
   if (onlyUnauth && isAuth) {
     const { from } = location.state ?? { from: { pathname: "/" } };
     return <Navigate to={from} />;

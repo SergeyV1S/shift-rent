@@ -7,7 +7,7 @@ export const Label = ({ className, ...props }: React.ComponentProps<"label">) =>
     data-slot='label'
     className={cn(
       typographyVariants({ variant: "paragraph_14_regular" }),
-      "flex flex-col gap-1",
+      "flex w-full flex-col gap-1",
       className
     )}
     {...props}

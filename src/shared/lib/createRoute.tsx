@@ -6,9 +6,11 @@ import { Spinner } from "@shared/ui";
 
 export const createRoute = (
   path: keyof typeof PATHS | string,
-  component: JSX.Element
+  component: JSX.Element,
+  config?: RouteObject
 ): RouteObject => ({
   path,
   element: <Suspense fallback={<Spinner />}>{component}</Suspense>,
-  errorElement: <div className=''>Error</div>
+  errorElement: <div className=''>Error</div>,
+  ...config
 });

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PatternFormat } from "react-number-format";
 
-import { Button, Input, Typography } from "@shared/ui";
+import { Button, ErrorMessage, Input, Typography } from "@shared/ui";
 
 import { signInFormSchema } from "../lib";
 import { useAuth, useAuthStore } from "../model";
@@ -41,11 +41,7 @@ export const SignInForm = () => {
       </div>
       <div className='space-y-1'>
         <Input type='text' placeholder='Проверочный код' {...signInForm.register("code")} />
-        {signInForm.formState.errors.code && (
-          <Typography variant='paragraph_14_regular' className='text-indicator-error'>
-            {signInForm.formState.errors.code.message}
-          </Typography>
-        )}
+        <ErrorMessage message={signInForm.formState.errors.code?.message} />
       </div>
       <Button type='submit' className='w-full' disabled={isLoading}>
         Войти

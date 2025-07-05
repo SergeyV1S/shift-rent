@@ -18,6 +18,7 @@
   --color-content-03: var(--content-03);
   --radius-input: 8px;
   --spacing-full: 100%;
+  --breakpoint-xs: 480px;
 }
 
 :root {
