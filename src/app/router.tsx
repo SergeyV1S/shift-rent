@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router";
 
-import { createSignInRoute } from "@modules/auth";
-import { createCarInfoRoute, createHomeRoute } from "@modules/car";
-import { createRentHistoryRoute } from "@modules/rent";
+import { signInRoute } from "@modules/auth";
+import { carInfoRoute, homeRoute } from "@modules/car";
+import { rentHistoryRoute } from "@modules/rent";
 
 import { ProtectedRoute } from "./ProtectedRoute";
 import { AppLayout } from "./layouts";
@@ -13,14 +13,14 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <ProtectedRoute onlyUnauth />,
-        children: [createSignInRoute()]
+        children: [signInRoute]
       },
       {
         element: <ProtectedRoute />,
-        children: [createRentHistoryRoute()]
+        children: [rentHistoryRoute]
       },
-      createHomeRoute(),
-      createCarInfoRoute()
+      homeRoute,
+      carInfoRoute
     ]
   }
 ]);

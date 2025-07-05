@@ -1,7 +1,7 @@
-import { Suspense, useEffect } from "react";
-import type { RouteObject } from "react-router";
+import { useEffect } from "react";
 
 import { PATHS } from "@shared/constants";
+import { createRoute } from "@shared/lib";
 import {
   Spinner,
   Table,
@@ -57,12 +57,4 @@ export const RentHistoryPage = () => {
   );
 };
 
-export const createRentHistoryRoute = (): RouteObject => ({
-  path: PATHS.RENT_HISTORY,
-  element: (
-    <Suspense fallback={<Spinner />}>
-      <RentHistoryPage />
-    </Suspense>
-  ),
-  errorElement: <div className=''>Error</div>
-});
+export const rentHistoryRoute = createRoute(PATHS.RENT_HISTORY, <RentHistoryPage />);

@@ -1,7 +1,5 @@
-import { Suspense } from "react";
-import type { RouteObject } from "react-router";
-
 import { PATHS } from "@shared/constants";
+import { createRoute } from "@shared/lib";
 import { Spinner, Typography } from "@shared/ui";
 
 import { CarCard, CarFilter } from "../_components";
@@ -28,12 +26,4 @@ const HomePage = () => {
   );
 };
 
-export const createHomeRoute = (): RouteObject => ({
-  path: PATHS.HOME,
-  element: (
-    <Suspense fallback={<Spinner />}>
-      <HomePage />
-    </Suspense>
-  ),
-  errorElement: <div className=''>Error</div>
-});
+export const homeRoute = createRoute(PATHS.HOME, <HomePage />);

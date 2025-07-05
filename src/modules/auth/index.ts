@@ -1,2 +1,2 @@
-export * from "./pages/SignInRoute";
+export * from "./pages/SignIn";
 export * from "./model/store";

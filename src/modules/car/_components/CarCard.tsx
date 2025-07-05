@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 
 import type { Car } from "@shared/api";
+import { PATHS } from "@shared/constants";
 import { Typography, buttonVariants } from "@shared/ui";
 
 import { carTransmissionTranslation } from "../constants";
@@ -26,7 +27,7 @@ export const CarCard = (car: Car) => {
           <Typography>{priceForTwoWeeks} ₽ за 14 дней</Typography>
         </div>
       </div>
-      <Link to={car.id} className={buttonVariants()}>
+      <Link to={`${PATHS.CAR}/${car.id}`} className={buttonVariants()}>
         Выбрать
       </Link>
     </div>
