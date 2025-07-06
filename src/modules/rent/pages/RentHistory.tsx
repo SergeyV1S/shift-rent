@@ -22,7 +22,7 @@ export const RentHistoryPage = () => {
   }, []);
 
   return (
-    <main className='space-y-6'>
+    <div className='space-y-6'>
       <Typography variant='title_h2' tag='h1'>
         Заказы
       </Typography>
@@ -53,7 +53,7 @@ export const RentHistoryPage = () => {
           )}
         </TableContent>
       </Table>
-    </main>
+    </div>
   );
 };
 

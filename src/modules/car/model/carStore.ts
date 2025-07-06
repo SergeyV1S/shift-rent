@@ -1,7 +1,14 @@
 import { create } from "zustand";
 
 import { getCars } from "@shared/api";
-import type { Car, CarBodyType, CarBrand, CarSteering, CarTransmission } from "@shared/api";
+import type {
+  BookedDateRange,
+  Car,
+  CarBodyType,
+  CarBrand,
+  CarSteering,
+  CarTransmission
+} from "@shared/api";
 import { handleError } from "@shared/helpers";
 
 import { useFilterStore } from "./filterStore";
@@ -10,8 +17,8 @@ interface ICarState {
   cars: Car[];
   bodyTypes: CarBodyType[];
   brands: CarBrand[];
-  selectedCar?: Car | string;
   isLoading?: boolean;
+  rent?: BookedDateRange;
   transmissionTypes: CarTransmission[];
   steeringTypes: CarSteering[];
 }
@@ -19,7 +26,6 @@ interface ICarState {
 interface ICarActions {
   setValue: <T extends keyof ICarState>(field: T, value: ICarState[T]) => void;
   fetchCars: () => void;
-  fetchSelectedCar: (carId: string) => void;
 }
 
 type TCarStore = ICarState & ICarActions;
@@ -65,19 +71,6 @@ export const useCarStore = create<TCarStore>((set) => ({
             state.transmissionTypes.length === 0 ? transmissionTypes : state.transmissionTypes
         };
       });
-    } catch (error) {
-      handleError(error);
-    } finally {
-      set({ isLoading: false });
-    }
-  },
-  fetchSelectedCar: async (carId) => {
-    try {
-      set({ isLoading: true });
-
-      const result = await carsApi.carsControllerGetCar(carId);
-
-      set({ selectedCar: result.data.data });
     } catch (error) {
       handleError(error);
     } finally {

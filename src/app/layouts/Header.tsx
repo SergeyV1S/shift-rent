@@ -20,7 +20,7 @@ export const Header = () => {
         )}
       >
         <Link className='flex items-center gap-1' to={PATHS.HOME}>
-          <Typography variant='title_h1' tag='h1'>
+          <Typography variant='heading' tag='h1'>
             ШИФТ
             <br />
             RENT

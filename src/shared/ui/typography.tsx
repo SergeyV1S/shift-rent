@@ -5,7 +5,8 @@ import { cn } from "@shared/lib";
 const typographyVariants = cva("font-inter text-base-text tracking-normal", {
   variants: {
     variant: {
-      title_h1: "leading-full font-firaSans text-brand-primary text-sm font-semibold",
+      heading: "leading-full font-firaSans text-brand-primary text-sm font-semibold",
+      title_h1: "text-5xl leading-14 font-bold",
       title_h2: "text-2xl leading-8 font-bold",
       title_h3: "text-xl leading-6 font-semibold",
       button_semibold: "text-base leading-6 font-semibold",
@@ -26,12 +27,24 @@ interface ITypographyProps
   extends React.HTMLAttributes<HTMLElement>,
     VariantProps<typeof typographyVariants> {
   tag?: TTag;
+  colorInherit?: boolean;
 }
 
-const Typography = ({ tag = "p", variant, className, ...props }: ITypographyProps) => {
+const Typography = ({
+  tag = "p",
+  colorInherit,
+  variant,
+  className,
+  ...props
+}: ITypographyProps) => {
   const Tag = tag;
 
-  return <Tag className={cn(typographyVariants({ variant, className }))} {...props} />;
+  return (
+    <Tag
+      className={cn(typographyVariants({ variant, className }), colorInherit && "text-inherit")}
+      {...props}
+    />
+  );
 };
 
 export { Typography, typographyVariants };

@@ -1,8 +1,7 @@
-import { type JSX, Suspense } from "react";
+import type { JSX } from "react";
 import type { RouteObject } from "react-router";
 
 import type { PATHS } from "@shared/constants";
-import { Spinner } from "@shared/ui";
 
 export const createRoute = (
   path: keyof typeof PATHS | string,
@@ -10,7 +9,7 @@ export const createRoute = (
   config?: RouteObject
 ): RouteObject => ({
   path,
-  element: <Suspense fallback={<Spinner />}>{component}</Suspense>,
+  element: component,
   errorElement: <div className=''>Error</div>,
   ...config
 });

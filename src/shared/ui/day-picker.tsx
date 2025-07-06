@@ -9,16 +9,16 @@ import "react-day-picker/style.css";
 import { formatDateRange } from "@shared/helpers";
 import { Label, Popover, Typography } from "@shared/ui";
 
-export const DayPicker = () => {
+interface IDayPickerProps {
+  onChange?: (dateRange: DateRange | undefined) => void;
+}
+
+export const DayPicker = ({ onChange }: IDayPickerProps) => {
   const [range, setRange] = useState<DateRange | undefined>();
 
   const handleRangeSelect = (selectedRange: DateRange | undefined) => {
     setRange(selectedRange);
-    // setValue("filters", {
-    //   ...filters,
-    //   dateFrom: selectedRange.from,
-    //   dateTo: selectedRange.to
-    // });
+    onChange?.(selectedRange);
   };
 
   return (

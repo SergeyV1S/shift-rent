@@ -9,7 +9,7 @@ const HomePage = () => {
   const { cars, isLoading } = useCarStore();
 
   return (
-    <main className='relative h-screen space-y-12'>
+    <div className='relative h-screen space-y-12'>
       <CarFilter />
       <section className='flex flex-wrap items-center justify-center gap-10'>
         {!isLoading &&
@@ -22,7 +22,7 @@ const HomePage = () => {
           ))}
         {isLoading && <Spinner />}
       </section>
-    </main>
+    </div>
   );
 };
 
