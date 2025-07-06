@@ -13,7 +13,7 @@ const monthNames = [
   "декабря"
 ];
 
-const formatDateRange = (range: { from?: Date; to?: Date }) => {
+const formatDateRange = (range?: { from?: Date; to?: Date }) => {
   if (!range?.from || !range?.to) return "";
 
   const fromDay = range.from.getDate().toString().padStart(2, "0");
@@ -29,10 +29,10 @@ const formatDateRange = (range: { from?: Date; to?: Date }) => {
     to: range.to
   });
 
-  return `${fromDay} ${fromMonthName !== toMonthName ? fromMonthName : ""} – ${toDay} ${toMonthName} ${year} (${daysDiff} ${getDayWord(daysDiff)})`;
+  return `${fromDay} ${fromMonthName !== toMonthName ? fromMonthName : ""} – ${toDay} ${toMonthName} ${year} (${daysDiff} ${getDayWord(+daysDiff)})`;
 };
 
-const formatDayMonthDateRange = (range: { from?: Date; to?: Date }) => {
+const formatDayMonthDateRange = (range?: { from?: Date; to?: Date }) => {
   if (!range?.from || !range?.to) return "";
 
   const fromDay = range.from.getDate().toString().padStart(2, "0");
@@ -44,7 +44,9 @@ const formatDayMonthDateRange = (range: { from?: Date; to?: Date }) => {
   return `${fromDay} ${fromMonthName} – ${toDay} ${toMonthName}`;
 };
 
-const getTimeDiff = (range: { from: Date; to: Date }) => {
+const getTimeDiff = (range?: { from?: Date; to?: Date }) => {
+  if (!range?.from || !range?.to) return 0;
+
   const timeDiff = range.to.getTime() - range.from.getTime();
   return Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
 };

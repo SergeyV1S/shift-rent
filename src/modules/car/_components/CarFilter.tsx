@@ -74,10 +74,12 @@ export const CarFilter = () => {
   };
 
   const onDateChange = (dateRange: DateRange | undefined) => {
-    carStore.setValue("rent", {
-      startDate: dateRange?.from?.getTime() || 0,
-      endDate: dateRange?.to?.getTime() || 0
-    });
+    const rentDays =
+      dateRange?.from && dateRange?.to
+        ? { startDate: dateRange.from.getTime(), endDate: dateRange.to.getTime() }
+        : undefined;
+
+    carStore.setValue("rent", rentDays);
   };
 
   useEffect(() => {
@@ -100,10 +102,11 @@ export const CarFilter = () => {
             />
           </Label>
           <DayPicker
-            defaultValue={{
-              from: new Date(rent?.startDate || 0),
-              to: new Date(rent?.endDate || 0)
-            }}
+            defaultValue={
+              rent?.startDate && rent?.endDate
+                ? { from: new Date(rent.startDate), to: new Date(rent.endDate) }
+                : undefined
+            }
             onChange={onDateChange}
           />
           <Button

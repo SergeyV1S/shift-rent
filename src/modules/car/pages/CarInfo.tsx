@@ -20,10 +20,10 @@ const CarInfoPage = () => {
   const carData = useLoaderData() as CarWithRents;
   const { rent } = useCarStore();
 
-  const formatedDateRange = {
-    from: new Date(rent?.startDate || 0),
-    to: new Date(rent?.endDate || 0)
-  };
+  const formatedDateRange =
+    rent?.startDate && rent?.endDate
+      ? { from: new Date(rent.startDate), to: new Date(rent.endDate) }
+      : undefined;
 
   const rentalDays = getTimeDiff(formatedDateRange);
 
@@ -74,7 +74,7 @@ const CarInfoPage = () => {
               </div>
             </div>
           </div>
-          {rent && (
+          {rent && rentalDays && (
             <div className='space-y-6'>
               <Typography variant='title_h2' tag='h2'>
                 Стоимость

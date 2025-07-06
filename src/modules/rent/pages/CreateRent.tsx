@@ -1,6 +1,6 @@
 import { PATHS } from "@shared/constants";
 import { createRoute } from "@shared/lib";
-import { Typography } from "@shared/ui";
+import { Progress, Typography } from "@shared/ui";
 
 import { CarReservationForm, DataReviewForm, UserDataForm } from "../_components";
 import { ESteps, steps } from "../constants";
@@ -23,8 +23,8 @@ export const CreateRent = () => {
           {currentStep}
         </Typography>
         <div className='space-y-2'>
-          <Typography variant='paragraph_12_regular'>{`Шаг ${steps.indexOf(currentStep) + 1} из 7`}</Typography>
-          {/* <Progress value={Math.ceil(((steps.indexOf(currentStep) + 1) / 7) * 100)} /> */}
+          <Typography variant='paragraph_12_regular'>{`Шаг ${steps.indexOf(currentStep) + 1} из 3`}</Typography>
+          <Progress value={Math.round(((steps.indexOf(currentStep) + 1) / 3) * 100)} />
         </div>
       </div>
       <div className='col-span-2'>{stepComponents[currentStep]}</div>
