@@ -30,7 +30,7 @@ import { useCarStore, useFilterStore } from "../model";
 
 export const CarFilter = () => {
   const { filters, isFiltersOpen, ...filterStore } = useFilterStore();
-  const { brands, bodyTypes, steeringTypes, transmissionTypes, fetchCars, ...carStore } =
+  const { brands, bodyTypes, steeringTypes, rent, transmissionTypes, fetchCars, ...carStore } =
     useCarStore();
   const { inputValue, handleChange } = useDebouncedInput({
     value: filters.search,
@@ -99,7 +99,13 @@ export const CarFilter = () => {
               placeholder='Поиск'
             />
           </Label>
-          <DayPicker onChange={onDateChange} />
+          <DayPicker
+            defaultValue={{
+              from: new Date(rent?.startDate || 0),
+              to: new Date(rent?.endDate || 0)
+            }}
+            onChange={onDateChange}
+          />
           <Button
             variant='secondary'
             onClick={() => filterStore.setValue("isFiltersOpen", !isFiltersOpen)}

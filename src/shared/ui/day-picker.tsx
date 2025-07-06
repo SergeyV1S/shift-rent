@@ -10,11 +10,12 @@ import { formatDateRange } from "@shared/helpers";
 import { Label, Popover, Typography } from "@shared/ui";
 
 interface IDayPickerProps {
+  defaultValue?: DateRange | undefined;
   onChange?: (dateRange: DateRange | undefined) => void;
 }
 
-export const DayPicker = ({ onChange }: IDayPickerProps) => {
-  const [range, setRange] = useState<DateRange | undefined>();
+export const DayPicker = ({ defaultValue, onChange }: IDayPickerProps) => {
+  const [range, setRange] = useState<DateRange | undefined>(defaultValue);
 
   const handleRangeSelect = (selectedRange: DateRange | undefined) => {
     setRange(selectedRange);

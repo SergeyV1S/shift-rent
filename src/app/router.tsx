@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 
 import { signInRoute } from "@modules/auth";
 import { carInfoRoute, homeRoute } from "@modules/car";
-import { rentHistoryRoute } from "@modules/rent";
+import { createRentRoute, rentHistoryRoute } from "@modules/rent";
 import { profileRoute } from "@modules/user";
 
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -21,7 +21,8 @@ export const router = createBrowserRouter([
         children: [rentHistoryRoute, profileRoute]
       },
       homeRoute,
-      carInfoRoute
+      carInfoRoute,
+      createRentRoute
     ]
   }
 ]);
