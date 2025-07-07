@@ -9,7 +9,7 @@
   "endOfLine": "lf",
   "arrowParens": "always",
   "importOrder": [
-    "^(lucide-react|react|react-dom|react-router|@hookform/resolvers|axios|effector|zod|react-hook-form)$",
+    "^(lucide-react|react|react-dom|react-router|@hookform/resolvers|axios|sonner|zod|react-hook-form)$",
     "<THIRD_PARTY_MODULES>",
     "^@app/(.*)$",
     "^@modules/(.*)$",
