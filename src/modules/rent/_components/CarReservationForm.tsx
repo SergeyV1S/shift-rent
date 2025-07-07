@@ -17,7 +17,7 @@ export const CarReservationForm = () => {
   const navigate = useNavigate();
   const { createRentData, nextStep, setRentData } = useCreateRentStore();
 
-  const formatedDateRange = formatDateRangeForRequest(rent);
+  const formatedDateRange = formatDateRangeForRequest(rent || createRentData);
 
   const carReservationForm = useForm<TCarReservationFormSchema>({
     resolver: zodResolver(carReservationFormSchema),

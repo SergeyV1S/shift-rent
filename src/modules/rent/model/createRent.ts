@@ -9,7 +9,7 @@ import { getCars } from "@shared/api";
 import type { CreateRentDto } from "@shared/api";
 import { handleError } from "@shared/helpers";
 
-import type { TCarReservationFormSchema } from "../lib";
+import type { TCarReservationFormSchema, TUserDataFormSchema } from "../lib";
 
 interface ICreateRentState {
   isLoading?: boolean;
@@ -19,7 +19,9 @@ interface ICreateRentState {
 
 interface ICreateRentActions {
   nextStep: () => void;
+  prevStep: () => void;
   setRentData: (rentData: TCarReservationFormSchema) => void;
+  setUserData: (userData: TUserDataFormSchema) => void;
   createRent: () => void;
 }
 
@@ -65,6 +67,11 @@ export const useCreateRentStore = create<TCreateRentStore>((set, get) => ({
         }
       }
     });
+  },
+  setUserData: (userData) => {
+    const { createRentData } = get();
+
+    set({ createRentData: { ...createRentData, ...userData } });
   },
   createRent: async () => {
     const { createRentData } = get();
