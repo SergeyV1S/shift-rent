@@ -15,13 +15,12 @@ export const useAuth = () => {
 
   const onOtpsFormSubmit = async (data: TOtpsFormSchema) => {
     const formatedPhone = formatPhone(data.phone);
-
     try {
       setValue("isLoading", true);
 
       const result = await otpsControllerCreateOtp({ phone: formatedPhone });
 
-      setValue(["phone", "retryDelay"], [formatedPhone, result.data.retryDelay]);
+      setValue(["phone", "retryDelay"], [data.phone, result.data.retryDelay]);
     } catch (error) {
       handleError(error);
     } finally {
@@ -30,11 +29,12 @@ export const useAuth = () => {
   };
 
   const onSignInFormSubmit = async (data: TSignInFormSchema) => {
+    const formatedPhone = formatPhone(data.phone);
     try {
       setValue("isLoading", true);
 
       const result = await usersControllerSignin({
-        ...data,
+        phone: formatedPhone,
         code: +data.code
       });
 

@@ -36,7 +36,7 @@ const CarInfoPage = () => {
         <ChevronLeft />
         <Typography colorInherit>Назад</Typography>
       </Link>
-      {car && (
+      {car && !isLoading && (
         <div className='flex justify-center gap-10'>
           <div className='grid h-fit basis-1/2 grid-cols-3 gap-5'>
             {car.media.map((image, index) => (
@@ -113,7 +113,7 @@ const CarInfoPage = () => {
           </div>
         </div>
       )}
-      {!car && isLoading && <Spinner />}
+      {isLoading && <Spinner />}
     </div>
   );
 };

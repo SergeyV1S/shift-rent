@@ -33,8 +33,8 @@ export const OtpsForm = () => {
           render={({ field }) => (
             <Input
               type='text'
-              placeholder='Телефон'
-              format='+7 (###) ### ## ##'
+              placeholder='+79'
+              format='+7 (9##) ### ## ##'
               mask='_'
               component={PatternFormat}
               aria-invalid={otpsForm.formState.errors.phone ? "true" : "false"}

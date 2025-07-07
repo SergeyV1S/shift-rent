@@ -44,6 +44,20 @@ const formatDayMonthDateRange = (range?: { from?: Date; to?: Date }) => {
   return `${fromDay} ${fromMonthName} – ${toDay} ${toMonthName}`;
 };
 
+const formatDateRangeWithYear = (range?: { from?: Date; to?: Date }) => {
+  if (!range?.from || !range?.to) return "";
+
+  const fromDay = range.from.getDate().toString().padStart(2, "0");
+  const toDay = range.to.getDate().toString().padStart(2, "0");
+
+  const fromMonthName = monthNames[range.from.getMonth()];
+  const toMonthName = monthNames[range.to.getMonth()];
+  const fromYear = range.to.getFullYear();
+  const toYear = range.to.getFullYear();
+
+  return `${fromDay} ${fromMonthName} ${fromYear} – ${toDay} ${toMonthName} ${toYear}`;
+};
+
 const getTimeDiff = (range?: { from?: Date; to?: Date }) => {
   if (!range?.from || !range?.to) return 0;
 
@@ -69,4 +83,10 @@ const formatDateRangeForRequest = (rent?: { startDate?: number; endDate?: number
   return format;
 };
 
-export { formatDateRange, getTimeDiff, formatDayMonthDateRange, formatDateRangeForRequest };
+export {
+  formatDateRange,
+  getTimeDiff,
+  formatDayMonthDateRange,
+  formatDateRangeForRequest,
+  formatDateRangeWithYear
+};

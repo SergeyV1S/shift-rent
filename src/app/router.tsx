@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 
 import { signInRoute } from "@modules/auth";
 import { carInfoRoute, homeRoute } from "@modules/car";
-import { createRentRoute, rentHistoryRoute } from "@modules/rent";
+import { createRentRoute, rentHistoryRoute, requestSentRoute } from "@modules/rent";
 import { profileRoute } from "@modules/user";
 
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -22,7 +22,8 @@ export const router = createBrowserRouter([
       },
       homeRoute,
       carInfoRoute,
-      createRentRoute
+      createRentRoute,
+      requestSentRoute
     ]
   }
 ]);

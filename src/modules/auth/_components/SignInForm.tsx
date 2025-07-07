@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PatternFormat } from "react-number-format";
 
 import { Button, ErrorMessage, Input, Typography } from "@shared/ui";
 
@@ -29,15 +28,7 @@ export const SignInForm = () => {
     >
       <Typography>Введите проверочный код для входа в личный кабинет</Typography>
       <div className='space-y-1'>
-        <Input
-          type='text'
-          placeholder='Телефон'
-          format='+7 (###) ### ## ##'
-          value={phone}
-          mask='_'
-          component={PatternFormat}
-          disabled
-        />
+        <Input type='text' value={phone} disabled />
       </div>
       <div className='space-y-1'>
         <Input type='text' placeholder='Проверочный код' {...signInForm.register("code")} />

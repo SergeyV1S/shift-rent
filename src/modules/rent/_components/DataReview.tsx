@@ -1,9 +1,10 @@
 import { PencilIcon } from "lucide-react";
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import { useCarStore } from "@modules/car";
 
+import { PATHS } from "@shared/constants";
 import { formatDateRange, formatDateRangeForRequest, getTimeDiff } from "@shared/helpers";
 import { Button, Typography } from "@shared/ui";
 
@@ -11,8 +12,9 @@ import { ESteps } from "../constants";
 import { useCreateRentStore } from "../model";
 
 export const DataReview = () => {
+  const navigate = useNavigate();
   const { car, isLoading, fetchCar } = useCarStore();
-  const { createRentData, prevStep, moveToStep } = useCreateRentStore();
+  const { createRentData, prevStep, moveToStep, createRent } = useCreateRentStore();
   const { carId } = useParams() as { carId: string };
 
   const formatedDate = formatDateRangeForRequest({
@@ -23,6 +25,11 @@ export const DataReview = () => {
   const rentDates = formatDateRange(formatedDate);
 
   const rentalDays = getTimeDiff(formatedDate);
+
+  const onClickHandler = () => {
+    navigate(PATHS.REQUEST_SENT);
+    createRent();
+  };
 
   useEffect(() => {
     fetchCar(carId);
@@ -105,7 +112,7 @@ export const DataReview = () => {
           </div>
         </div>
       </div>
-      <div className='w-full text-end'>
+      <div className='w-full space-y-4 text-end'>
         {car && <Typography variant='title_h3'>Итого: {rentalDays * car.price} ₽</Typography>}
         <Typography>Аренда: {rentDates}</Typography>
       </div>
@@ -113,7 +120,7 @@ export const DataReview = () => {
         <Button className='basis-1/3' type='button' variant='outline' onClick={prevStep}>
           Назад
         </Button>
-        <Button className='basis-1/3' type='submit'>
+        <Button className='basis-1/3' type='submit' onClick={onClickHandler}>
           Забронировать
         </Button>
       </nav>

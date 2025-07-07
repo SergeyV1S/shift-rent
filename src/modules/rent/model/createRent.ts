@@ -3,11 +3,11 @@ import { toast } from "sonner";
 import { create } from "zustand";
 
 import type { EStepsType } from "@modules/rent";
-import { ESteps, steps } from "@modules/rent/constants";
+import { ESteps, defaultCreateRentData, steps } from "@modules/rent/constants";
 
 import { getCars } from "@shared/api";
-import type { CreateRentDto } from "@shared/api";
-import { handleError } from "@shared/helpers";
+import type { CarRent, CreateRentDto } from "@shared/api";
+import { formatPhone, handleError } from "@shared/helpers";
 
 import type { TCarReservationFormSchema, TUserDataFormSchema } from "../lib";
 
@@ -15,6 +15,7 @@ interface ICreateRentState {
   isLoading?: boolean;
   currentStep: EStepsType;
   createRentData: CreateRentDto;
+  createdRent?: CarRent;
 }
 
 interface ICreateRentActions {
@@ -33,18 +34,7 @@ const carsApi = getCars();
 
 export const useCreateRentStore = create<TCreateRentStore>((set, get) => ({
   currentStep: ESteps.CAR_RESERVATION,
-  createRentData: {
-    carId: "",
-    pickupLocation: "",
-    returnLocation: "",
-    startDate: 0,
-    endDate: 0,
-    firstName: "",
-    lastName: "",
-    birthDate: "",
-    email: "",
-    phone: ""
-  },
+  createRentData: defaultCreateRentData,
   setCarId: (carId) => {
     const { createRentData } = get();
 
@@ -90,7 +80,15 @@ export const useCreateRentStore = create<TCreateRentStore>((set, get) => ({
     const { createRentData } = get();
     try {
       set({ isLoading: true });
-      await carsApi.carsControllerCreateCarRent(createRentData);
+
+      const result = await carsApi.carsControllerCreateCarRent({
+        ...createRentData,
+        phone: formatPhone(createRentData.phone),
+        birthDate: createRentData.birthDate.split(".").reverse().join("-")
+      });
+
+      set({ createdRent: result.data.rent });
+      set({ createRentData: defaultCreateRentData });
 
       toast.success("Машина забронирована!");
     } catch (error) {
