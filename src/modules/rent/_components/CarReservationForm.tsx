@@ -17,7 +17,7 @@ export const CarReservationForm = () => {
   const navigate = useNavigate();
   const { createRentData, nextStep, setRentData } = useCreateRentStore();
 
-  const formatedDateRange = formatDateRangeForRequest(rent || createRentData);
+  const formatedDateRange = formatDateRangeForRequest(createRentData || rent);
 
   const carReservationForm = useForm<TCarReservationFormSchema>({
     resolver: zodResolver(carReservationFormSchema),
@@ -65,12 +65,12 @@ export const CarReservationForm = () => {
         <Input placeholder='Место возврата' {...carReservationForm.register("returnLocation")} />
         <ErrorMessage message={carReservationForm.formState.errors.returnLocation?.message} />
       </Label>
-      <div className='flex w-full items-center justify-between'>
+      <nav className='flex w-full items-center justify-between'>
         <Button type='button' variant='outline' onClick={goBack}>
           Назад
         </Button>
         <Button type='submit'>Продолжить</Button>
-      </div>
+      </nav>
     </form>
   );
 };

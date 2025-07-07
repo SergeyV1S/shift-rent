@@ -15,6 +15,7 @@ import { useFilterStore } from "./filterStore";
 
 interface ICarState {
   cars: Car[];
+  car?: Car;
   bodyTypes: CarBodyType[];
   brands: CarBrand[];
   isLoading?: boolean;
@@ -26,6 +27,7 @@ interface ICarState {
 interface ICarActions {
   setValue: <T extends keyof ICarState>(field: T, value: ICarState[T]) => void;
   fetchCars: () => void;
+  fetchCar: (carId: string) => void;
 }
 
 type TCarStore = ICarState & ICarActions;
@@ -71,6 +73,19 @@ export const useCarStore = create<TCarStore>((set) => ({
             state.transmissionTypes.length === 0 ? transmissionTypes : state.transmissionTypes
         };
       });
+    } catch (error) {
+      handleError(error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+  fetchCar: async (carId) => {
+    try {
+      set({ isLoading: true });
+
+      const result = await carsApi.carsControllerGetCar(carId);
+
+      set({ car: result.data.data });
     } catch (error) {
       handleError(error);
     } finally {

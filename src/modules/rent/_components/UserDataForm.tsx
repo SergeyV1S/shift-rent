@@ -29,18 +29,18 @@ export const UserDataForm = () => {
     >
       <Label>
         Фамилия*
-        <Input placeholder='Фамилия' {...userDataForm.register("lastname")} />
-        <ErrorMessage message={userDataForm.formState.errors.lastname?.message} />
+        <Input placeholder='Фамилия' {...userDataForm.register("lastName")} />
+        <ErrorMessage message={userDataForm.formState.errors.lastName?.message} />
       </Label>
       <Label>
         Имя*
-        <Input placeholder='Имя' {...userDataForm.register("firstname")} />
-        <ErrorMessage message={userDataForm.formState.errors.firstname?.message} />
+        <Input placeholder='Имя' {...userDataForm.register("firstName")} />
+        <ErrorMessage message={userDataForm.formState.errors.firstName?.message} />
       </Label>
       <Label>
         Отчество
-        <Input placeholder='Имя' {...userDataForm.register("middlename")} />
-        <ErrorMessage message={userDataForm.formState.errors.middlename?.message} />
+        <Input placeholder='Имя' {...userDataForm.register("middleName")} />
+        <ErrorMessage message={userDataForm.formState.errors.middleName?.message} />
       </Label>
       <Label>
         Дата рождения*
@@ -90,12 +90,12 @@ export const UserDataForm = () => {
         <Input placeholder='Комментарий' {...userDataForm.register("comment")} />
         <ErrorMessage message={userDataForm.formState.errors.comment?.message} />
       </Label>
-      <div className='flex w-full items-center justify-between'>
+      <nav className='flex w-full items-center justify-between'>
         <Button type='button' variant='outline' onClick={prevStep}>
           Назад
         </Button>
         <Button type='submit'>Продолжить</Button>
-      </div>
+      </nav>
     </form>
   );
 };

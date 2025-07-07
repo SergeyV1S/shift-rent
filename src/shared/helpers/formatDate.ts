@@ -61,9 +61,12 @@ const getDayWord = (count: number) => {
   return "дней";
 };
 
-const formatDateRangeForRequest = (rent?: { startDate?: number; endDate?: number }) =>
-  rent?.startDate && rent?.endDate
-    ? { from: new Date(rent.startDate), to: new Date(rent.endDate) }
-    : undefined;
+const formatDateRangeForRequest = (rent?: { startDate?: number; endDate?: number }) => {
+  const format =
+    rent?.startDate && rent?.endDate
+      ? { from: new Date(rent.startDate), to: new Date(rent.endDate) }
+      : undefined;
+  return format;
+};
 
 export { formatDateRange, getTimeDiff, formatDayMonthDateRange, formatDateRangeForRequest };

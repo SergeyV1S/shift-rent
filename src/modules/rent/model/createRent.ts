@@ -20,8 +20,10 @@ interface ICreateRentState {
 interface ICreateRentActions {
   nextStep: () => void;
   prevStep: () => void;
+  moveToStep: (step: EStepsType) => void;
   setRentData: (rentData: TCarReservationFormSchema) => void;
   setUserData: (userData: TUserDataFormSchema) => void;
+  setCarId: (carId: string) => void;
   createRent: () => void;
 }
 
@@ -43,6 +45,17 @@ export const useCreateRentStore = create<TCreateRentStore>((set, get) => ({
     email: "",
     phone: ""
   },
+  setCarId: (carId) => {
+    const { createRentData } = get();
+
+    set({
+      createRentData: {
+        ...createRentData,
+        carId
+      }
+    });
+  },
+  moveToStep: (step) => set({ currentStep: step }),
   nextStep: () => {
     const { currentStep } = get();
     const nextStepIndex = Math.min(steps.indexOf(currentStep) + 1, 2);
@@ -61,9 +74,9 @@ export const useCreateRentStore = create<TCreateRentStore>((set, get) => ({
       createRentData: {
         ...createRentData,
         ...{
-          startDate: rentData.rentDate?.from.getDate(),
-          endDate: rentData.rentDate?.to?.getDate() || rentData.rentDate?.from.getDate(),
-          ...rentData
+          ...rentData,
+          startDate: rentData.rentDate?.from.getTime(),
+          endDate: rentData.rentDate?.to?.getTime() || rentData.rentDate?.from.getTime()
         }
       }
     });

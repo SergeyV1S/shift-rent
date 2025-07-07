@@ -1,8 +1,11 @@
+import { useEffect } from "react";
+import { useParams } from "react-router";
+
 import { PATHS } from "@shared/constants";
 import { createRoute } from "@shared/lib";
 import { Progress, Typography } from "@shared/ui";
 
-import { CarReservationForm, DataReviewForm, UserDataForm } from "../_components";
+import { CarReservationForm, DataReview, UserDataForm } from "../_components";
 import { ESteps, steps } from "../constants";
 import type { EStepsType } from "../constants";
 import { useCreateRentStore } from "../model/createRent";
@@ -10,11 +13,16 @@ import { useCreateRentStore } from "../model/createRent";
 const stepComponents: Record<EStepsType, React.JSX.Element> = {
   [ESteps.CAR_RESERVATION]: <CarReservationForm />,
   [ESteps.USER_DATA]: <UserDataForm />,
-  [ESteps.DATA_REVIEW]: <DataReviewForm />
+  [ESteps.DATA_REVIEW]: <DataReview />
 };
 
 export const CreateRent = () => {
-  const { currentStep } = useCreateRentStore();
+  const { currentStep, setCarId } = useCreateRentStore();
+  const { carId } = useParams() as { carId: string };
+
+  useEffect(() => {
+    setCarId(carId);
+  }, [carId]);
 
   return (
     <div className='grid grid-cols-2 gap-y-6 max-md:flex max-md:flex-col'>
@@ -32,4 +40,4 @@ export const CreateRent = () => {
   );
 };
 
-export const createRentRoute = createRoute(PATHS.CAR_RESERVATION, <CreateRent />);
+export const createRentRoute = createRoute(`${PATHS.CAR_RESERVATION}/:carId`, <CreateRent />);
