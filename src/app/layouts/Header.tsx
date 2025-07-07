@@ -40,7 +40,7 @@ export const Header = () => {
               }
             >
               <UserRoundIcon />
-              <span>Профиль</span>
+              Профиль
             </NavLink>
             <NavLink
               to={PATHS.RENT_HISTORY}
@@ -53,7 +53,7 @@ export const Header = () => {
               }
             >
               <ClockIcon />
-              <span>Заказы</span>
+              Заказы
             </NavLink>
           </div>
         )}
@@ -66,7 +66,7 @@ export const Header = () => {
               onClick={logout}
             >
               <LogOutIcon />
-              <span>Выйти</span>
+              Выйти
             </Button>
           ) : (
             <Link
@@ -77,7 +77,7 @@ export const Header = () => {
               )}
             >
               <LogInIcon />
-              <span>Войти</span>
+              Войти
             </Link>
           )}
           <Button variant='ghost' size='icon'>
