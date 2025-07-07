@@ -13,22 +13,22 @@ export const Header = () => {
 
   return (
     <header className='border-b-border-light border-b'>
-      <div
+      <nav
         className={cn(
           "container items-center py-4",
           isAuth ? "grid grid-cols-[120px_1fr_200px]" : "flex justify-between"
         )}
       >
-        <div className='flex items-center gap-1'>
-          <Typography variant='title_h1' tag='h1'>
+        <Link className='flex items-center gap-1' to={PATHS.HOME}>
+          <Typography variant='heading' tag='h1'>
             ШИФТ
             <br />
             RENT
           </Typography>
           <img src='/logo.svg' alt='rent car logo' />
-        </div>
+        </Link>
         {isAuth && (
-          <nav className='flex items-center gap-8'>
+          <div className='flex items-center gap-8'>
             <NavLink
               to={PATHS.PROFILE}
               className={({ isActive }) =>
@@ -40,7 +40,7 @@ export const Header = () => {
               }
             >
               <UserRoundIcon />
-              <span>Профиль</span>
+              Профиль
             </NavLink>
             <NavLink
               to={PATHS.RENT_HISTORY}
@@ -53,9 +53,9 @@ export const Header = () => {
               }
             >
               <ClockIcon />
-              <span>Заказы</span>
+              Заказы
             </NavLink>
-          </nav>
+          </div>
         )}
         <div className='flex items-center gap-8'>
           {isAuth ? (
@@ -66,7 +66,7 @@ export const Header = () => {
               onClick={logout}
             >
               <LogOutIcon />
-              <span>Выйти</span>
+              Выйти
             </Button>
           ) : (
             <Link
@@ -77,14 +77,14 @@ export const Header = () => {
               )}
             >
               <LogInIcon />
-              <span>Войти</span>
+              Войти
             </Link>
           )}
           <Button variant='ghost' size='icon'>
             <MoonIcon />
           </Button>
         </div>
-      </div>
+      </nav>
     </header>
   );
 };

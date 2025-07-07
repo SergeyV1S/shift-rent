@@ -1,3 +1,5 @@
+import { PATHS } from "@shared/constants";
+import { createRoute } from "@shared/lib";
 import { Typography } from "@shared/ui";
 
 import { OtpsForm, SignInForm } from "../_components";
@@ -15,3 +17,5 @@ export const SignInPage = () => {
     </main>
   );
 };
+
+export const signInRoute = createRoute(PATHS.SIGNIN, <SignInPage />);

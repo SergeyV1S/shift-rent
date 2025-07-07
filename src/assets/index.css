@@ -7,6 +7,7 @@
 
 @theme inline {
   --color-bg-primary: var(--bg-primary);
+  --color-indicator-positive: var(--indicator-positive);
   --color-stroke-primary: var(--stroke-primary);
   --color-brand-primary: var(--brand-primary);
   --color-indicator-attention: var(--indicator-attention);
@@ -17,10 +18,12 @@
   --color-content-05: var(--content-05);
   --color-content-03: var(--content-03);
   --radius-input: 8px;
+  --radius-card: 24px;
   --spacing-full: 100%;
+  --breakpoint-xs: 480px;
 }
-
 :root {
+  --indicator-positive: rgba(78, 207, 83, 1);
   --indicator-error: rgba(246, 76, 76, 1);
   --stroke-primary: rgba(224, 224, 224, 1);
   --indicator-attention: rgba(253, 212, 66, 1);

@@ -9,16 +9,17 @@ import "react-day-picker/style.css";
 import { formatDateRange } from "@shared/helpers";
 import { Label, Popover, Typography } from "@shared/ui";
 
-export const DayPicker = () => {
-  const [range, setRange] = useState<DateRange | undefined>();
+interface IDayPickerProps {
+  defaultValue?: DateRange | undefined;
+  onChange?: (dateRange: DateRange | undefined) => void;
+}
+
+export const DayPicker = ({ defaultValue, onChange }: IDayPickerProps) => {
+  const [range, setRange] = useState<DateRange | undefined>(defaultValue);
 
   const handleRangeSelect = (selectedRange: DateRange | undefined) => {
     setRange(selectedRange);
-    // setValue("filters", {
-    //   ...filters,
-    //   dateFrom: selectedRange.from,
-    //   dateTo: selectedRange.to
-    // });
+    onChange?.(selectedRange);
   };
 
   return (
@@ -28,18 +29,13 @@ export const DayPicker = () => {
         placeholder={
           <div className='flex items-center justify-between'>
             <Typography className='truncate'>
-              {formatDateRange({ ...range }) || "Выберите даты аренды"}
+              {range ? formatDateRange(range) : "Выберите даты аренды"}
             </Typography>
             <CalendarDaysIcon className='opacity-70' />
           </div>
         }
       >
-        <LibDayPicker
-          mode='range'
-          locale={ru}
-          selected={range}
-          onSelect={(d) => handleRangeSelect(d)}
-        />
+        <LibDayPicker mode='range' locale={ru} selected={range} onSelect={handleRangeSelect} />
       </Popover>
     </Label>
   );

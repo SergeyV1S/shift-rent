@@ -22,7 +22,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
-      localStorage.clear();
+      localStorage.removeItem(ACCESS_TOKEN);
     }
     return Promise.reject(error);
   }

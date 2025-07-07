@@ -1,7 +1,7 @@
-import { Suspense, useEffect } from "react";
-import type { RouteObject } from "react-router";
+import { useEffect } from "react";
 
 import { PATHS } from "@shared/constants";
+import { createRoute } from "@shared/lib";
 import {
   Spinner,
   Table,
@@ -22,7 +22,7 @@ export const RentHistoryPage = () => {
   }, []);
 
   return (
-    <main className='space-y-6'>
+    <div className='space-y-6'>
       <Typography variant='title_h2' tag='h1'>
         Заказы
       </Typography>
@@ -53,16 +53,8 @@ export const RentHistoryPage = () => {
           )}
         </TableContent>
       </Table>
-    </main>
+    </div>
   );
 };
 
-export const createRentHistoryRoute = (): RouteObject => ({
-  path: PATHS.RENT_HISTORY,
-  element: (
-    <Suspense fallback={<Spinner />}>
-      <RentHistoryPage />
-    </Suspense>
-  ),
-  errorElement: <div className=''>Error</div>
-});
+export const rentHistoryRoute = createRoute(PATHS.RENT_HISTORY, <RentHistoryPage />);

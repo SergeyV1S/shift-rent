@@ -6,6 +6,6 @@ import { router } from "./router";
 export const Providers = () => (
   <>
     <RouterProvider router={router} />
-    <Toaster position='top-center' richColors />
+    <Toaster position='top-center' richColors closeButton />
   </>
 );

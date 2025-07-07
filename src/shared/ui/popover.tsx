@@ -23,6 +23,7 @@ export const Popover = ({
   return (
     <div className='relative w-full' ref={popoverRef}>
       <button
+        type='button'
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
           "rounded-input text-content-05 disabled:bg-bg-primary disabled:text-content-05 focus-visible:border-brand-primary border-border-light focus-visible:ring-brand-primary transition-[ring, border] h-12 w-full border bg-white p-3 duration-200 outline-none focus-visible:ring-2",

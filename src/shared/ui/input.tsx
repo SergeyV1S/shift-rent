@@ -1,6 +1,6 @@
 import { cn } from "@shared/lib";
 
-import { typographyVariants } from "./typography";
+import { Typography, typographyVariants } from "./typography";
 
 type TInputProps<Component extends React.ElementType = "input"> = {
   component?: Component;
@@ -22,3 +22,21 @@ export const InputBase = ({ className, component: Component = "input", ...props 
 export const Input = InputBase as <Component extends React.ElementType = "input">(
   props: TInputProps<Component>
 ) => React.ReactElement;
+
+interface IErrorMessageProps extends React.ComponentProps<"p"> {
+  message?: string;
+}
+
+export const ErrorMessage = ({ className, message, ...props }: IErrorMessageProps) => {
+  if (!message) return null;
+
+  return (
+    <Typography
+      variant='paragraph_14_regular'
+      className={cn("text-indicator-error", className)}
+      {...props}
+    >
+      {message}
+    </Typography>
+  );
+};

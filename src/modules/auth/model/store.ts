@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { ACCESS_TOKEN } from "@shared/constants";
+import { batchSetState } from "@shared/lib";
 
 interface IAuthState {
   isAuth: boolean;
@@ -21,13 +22,5 @@ type TAuthStore = IAuthState & IAuthActions;
 export const useAuthStore = create<TAuthStore>((set) => ({
   phone: "",
   isAuth: Boolean(localStorage.getItem(ACCESS_TOKEN)),
-  setValue: (field, value) => {
-    if (Array.isArray(field) && Array.isArray(value)) {
-      field.map((f, i) => set({ [f]: value[i] }));
-    } else if (!Array.isArray(field) && !Array.isArray(value)) {
-      set({ [field]: value });
-    } else {
-      console.error("Невозможное действие");
-    }
-  }
+  setValue: (field, value) => batchSetState(set, field, value)
 }));

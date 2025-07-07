@@ -4,8 +4,8 @@ WORKDIR /var/www
 
 ARG BASE_API_URL="${BASE_API_URL}"
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json ./
+RUN yarn install
 
 COPY . .
 

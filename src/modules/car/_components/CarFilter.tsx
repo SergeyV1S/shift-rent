@@ -1,6 +1,8 @@
 import { Settings2Icon } from "lucide-react";
 import { useEffect, useRef } from "react";
 
+import type { DateRange } from "react-day-picker";
+
 import type { CarBodyType, CarBrand } from "@shared/api";
 import { useClickOutside, useDebouncedInput } from "@shared/hooks";
 import { cn } from "@shared/lib";
@@ -18,23 +20,28 @@ import {
   Typography
 } from "@shared/ui";
 
-import { carSteeringTranslation, carTransmissionTranslation } from "../constants";
+import {
+  carBodyTypeTranslation,
+  carSteeringTranslation,
+  carTransmissionTranslation
+} from "../constants";
 import { createOptionsWithTranslation } from "../helpers";
 import { useCarStore, useFilterStore } from "../model";
 
 export const CarFilter = () => {
-  const { filters, isFiltersOpen, setValue } = useFilterStore();
-  const { brands, bodyTypes, steeringTypes, transmissionTypes, fetchCars } = useCarStore();
+  const { filters, isFiltersOpen, ...filterStore } = useFilterStore();
+  const { brands, bodyTypes, steeringTypes, rent, transmissionTypes, fetchCars, ...carStore } =
+    useCarStore();
   const { inputValue, handleChange } = useDebouncedInput({
     value: filters.search,
-    onChange: (value) => setValue("filters", { ...filters, search: value }),
+    onChange: (value) => filterStore.setValue("filters", { ...filters, search: value }),
     delay: 400
   });
   const advancedFiltersRef = useRef<HTMLDivElement>(null);
 
-  const isShowButtomDisabled = Object.values(filters).filter((filter) => filter).length === 0;
+  const isFilterButtonsDisabled = Object.values(filters).filter((filter) => filter).length === 0;
 
-  const bodyTypesOptions = createOptionsWithTranslation(bodyTypes);
+  const bodyTypesOptions = createOptionsWithTranslation(bodyTypes, false, carBodyTypeTranslation);
   const brandsOptions = createOptionsWithTranslation(brands);
   const transmissionTypesOptions = createOptionsWithTranslation(
     transmissionTypes,
@@ -49,28 +56,37 @@ export const CarFilter = () => {
 
   const showCarsByFilters = () => {
     fetchCars();
-    setValue("isFiltersOpen", false);
+    filterStore.setValue("isFiltersOpen", false);
   };
 
   const onTabSwitch = (filter: keyof typeof filters, value: string) => {
     const newValue = value === "all" ? undefined : value;
 
-    setValue("filters", {
+    filterStore.setValue("filters", {
       ...filters,
       [filter]: newValue
     });
   };
 
   const resetFilters = () => {
-    setValue("filters", {});
+    filterStore.setValue("filters", {});
     showCarsByFilters();
+  };
+
+  const onDateChange = (dateRange: DateRange | undefined) => {
+    const rentDays =
+      dateRange?.from && dateRange?.to
+        ? { startDate: dateRange.from.getTime(), endDate: dateRange.to.getTime() }
+        : undefined;
+
+    carStore.setValue("rent", rentDays);
   };
 
   useEffect(() => {
     fetchCars();
   }, [filters.search]);
 
-  useClickOutside(advancedFiltersRef, () => setValue("isFiltersOpen", false));
+  useClickOutside(advancedFiltersRef, () => filterStore.setValue("isFiltersOpen", false));
 
   return (
     <>
@@ -85,8 +101,18 @@ export const CarFilter = () => {
               placeholder='Поиск'
             />
           </Label>
-          <DayPicker />
-          <Button variant='secondary' onClick={() => setValue("isFiltersOpen", !isFiltersOpen)}>
+          <DayPicker
+            defaultValue={
+              rent?.startDate && rent?.endDate
+                ? { from: new Date(rent.startDate), to: new Date(rent.endDate) }
+                : undefined
+            }
+            onChange={onDateChange}
+          />
+          <Button
+            variant='secondary'
+            onClick={() => filterStore.setValue("isFiltersOpen", !isFiltersOpen)}
+          >
             <Settings2Icon /> Фильтры
           </Button>
         </div>
@@ -106,7 +132,7 @@ export const CarFilter = () => {
                 options={bodyTypesOptions}
                 value={filters.bodyType}
                 onChange={(value) =>
-                  setValue("filters", { ...filters, bodyType: value as CarBodyType })
+                  filterStore.setValue("filters", { ...filters, bodyType: value as CarBodyType })
                 }
                 placeholder='Выберите тип кузова'
                 className='w-64'
@@ -117,7 +143,9 @@ export const CarFilter = () => {
               <Select
                 options={brandsOptions}
                 value={filters.brand}
-                onChange={(value) => setValue("filters", { ...filters, brand: value as CarBrand })}
+                onChange={(value) =>
+                  filterStore.setValue("filters", { ...filters, brand: value as CarBrand })
+                }
                 placeholder='Выберите бренд'
                 className='w-64'
               />
@@ -160,7 +188,11 @@ export const CarFilter = () => {
                 max={10000}
                 minValue={filters.minPrice || 0}
                 onChange={(price) => {
-                  setValue("filters", { ...filters, maxPrice: price.max, minPrice: price.min });
+                  filterStore.setValue("filters", {
+                    ...filters,
+                    maxPrice: price.max,
+                    minPrice: price.min
+                  });
                 }}
               />
               <div className='flex items-center justify-between'>
@@ -179,14 +211,19 @@ export const CarFilter = () => {
                 onColorChange={(color) => onTabSwitch("color", color)}
               />
             </Label>
-            <Button variant='outline' className='w-2/3 max-md:w-full' onClick={resetFilters}>
+            <Button
+              variant='outline'
+              className='w-2/3 max-md:w-full'
+              onClick={resetFilters}
+              disabled={isFilterButtonsDisabled}
+            >
               Сбросить фильтры
             </Button>
             <div className='w-full text-end'>
               <Button
                 className='w-2/3 max-md:w-full'
                 onClick={showCarsByFilters}
-                disabled={isShowButtomDisabled}
+                disabled={isFilterButtonsDisabled}
               >
                 Показать
               </Button>

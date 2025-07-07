@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PatternFormat } from "react-number-format";
 
-import { Button, Input, Typography } from "@shared/ui";
+import { Button, ErrorMessage, Input, Typography } from "@shared/ui";
 
 import { otpsFormSchema } from "../lib";
 import { useAuth, useAuthStore } from "../model";
@@ -33,8 +33,8 @@ export const OtpsForm = () => {
           render={({ field }) => (
             <Input
               type='text'
-              placeholder='Телефон'
-              format='+7 (###) ### ## ##'
+              placeholder='+79'
+              format='+7 (9##) ### ## ##'
               mask='_'
               component={PatternFormat}
               aria-invalid={otpsForm.formState.errors.phone ? "true" : "false"}
@@ -42,11 +42,7 @@ export const OtpsForm = () => {
             />
           )}
         />
-        {otpsForm.formState.errors.phone && (
-          <Typography variant='paragraph_14_regular' className='text-indicator-error'>
-            {otpsForm.formState.errors.phone.message}
-          </Typography>
-        )}
+        <ErrorMessage message={otpsForm.formState.errors.phone?.message} />
       </div>
       <Button type='submit' className='w-full' disabled={isLoading}>
         Продолжить
