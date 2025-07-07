@@ -4,7 +4,7 @@ import { Link, useLoaderData } from "react-router";
 import { getCars } from "@shared/api";
 import type { CarWithRents } from "@shared/api";
 import { PATHS } from "@shared/constants";
-import { formatDayMonthDateRange, getTimeDiff } from "@shared/helpers";
+import { formatDateRangeForRequest, formatDayMonthDateRange, getTimeDiff } from "@shared/helpers";
 import { cn, createRoute } from "@shared/lib";
 import { Typography, buttonVariants } from "@shared/ui";
 
@@ -20,10 +20,7 @@ const CarInfoPage = () => {
   const carData = useLoaderData() as CarWithRents;
   const { rent } = useCarStore();
 
-  const formatedDateRange =
-    rent?.startDate && rent?.endDate
-      ? { from: new Date(rent.startDate), to: new Date(rent.endDate) }
-      : undefined;
+  const formatedDateRange = formatDateRangeForRequest(rent);
 
   const rentalDays = getTimeDiff(formatedDateRange);
 

@@ -55,7 +55,7 @@ export const useUserStore = create<TUserStore>((set, get) => ({
 
       toast.success("Данные успешно обновлены!");
     } catch (error) {
-      handleError(error);
+      console.log(error);
     } finally {
       set({ isLoading: false });
     }
