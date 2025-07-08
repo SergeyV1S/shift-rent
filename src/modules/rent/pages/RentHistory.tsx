@@ -15,7 +15,7 @@ import {
   typographyVariants
 } from "@shared/ui";
 
-import { rentStatusTranslation } from "../constants";
+import { ViewStatus } from "../_components";
 import { useRentHistoryStore } from "../model";
 
 export const RentHistoryPage = () => {
@@ -38,19 +38,12 @@ export const RentHistoryPage = () => {
         </TableHeader>
         <TableContent>
           {!isLoading &&
-            // Fix
             rentHistory.map((rent) => (
               <TableRow key={rent._id}>
                 <TableCell>{rent.carInfo.name}</TableCell>
                 <TableCell>{formatDateRangeFromNumber(rent.startDate, rent.endDate)}</TableCell>
-                <TableCell className='flex items-center gap-3'>
-                  <>
-                    <div
-                      className='size-2 rounded-full'
-                      style={{ backgroundColor: rentStatusTranslation[rent.status].color }}
-                    />
-                    {rentStatusTranslation[rent.status].value}
-                  </>
+                <TableCell>
+                  <ViewStatus status={rent.status} />
                 </TableCell>
                 <TableCell>
                   <Link

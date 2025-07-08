@@ -1,4 +1,12 @@
-import { addDays, differenceInDays, format, formatISO9075, isValid, parse } from "date-fns";
+import {
+  addDays,
+  differenceInDays,
+  format,
+  formatISO9075,
+  isValid,
+  parse,
+  parseISO
+} from "date-fns";
 import { ru } from "date-fns/locale";
 
 const formatDateRange = (range?: { from?: Date; to?: Date }) => {
@@ -53,6 +61,14 @@ const formatToISO = (date: string) => {
   return formatISO9075(new Date(dateFromString), { representation: "date" });
 };
 
+const formatDateFromISO = (date: string) => {
+  const dateFromString = parseISO(date);
+
+  return format(dateFromString, "dd.MM.yyyy", { locale: ru });
+};
+
+const formatTime = (time: number) => time.toString().padStart(2, "0");
+
 export const formatDateRangeFromNumber = (from: number, to: number) => {
   const startDate = new Date(from);
   const endDate = new Date(to);
@@ -68,5 +84,7 @@ export {
   getDayWord,
   formatDateRangeForRequest,
   getTomorrow,
+  formatTime,
+  formatDateFromISO,
   formatToISO
 };

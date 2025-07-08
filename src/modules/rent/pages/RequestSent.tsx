@@ -7,6 +7,7 @@ import { formatDateRangeForRequest, formatDateRangeWithYear } from "@shared/help
 import { cn, createRoute } from "@shared/lib";
 import { Spinner, Typography, buttonVariants } from "@shared/ui";
 
+import { ViewStatus } from "../_components";
 import { useCreateRentStore } from "../model";
 
 export const RequestSent = () => {
@@ -40,7 +41,7 @@ export const RequestSent = () => {
           <div className='space-y-6 px-12 py-6'>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Статус</Typography>
-              <Typography>{createdRent.status}</Typography>
+              <ViewStatus status={createdRent.status} />
             </div>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Даты брони</Typography>

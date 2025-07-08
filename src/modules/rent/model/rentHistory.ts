@@ -12,6 +12,7 @@ interface IRentHistoryState {
 interface IRentHistoryActions {
   setValue: <T extends keyof IRentHistoryState>(field: T, value: IRentHistoryState[T]) => void;
   fetchRentHistory: () => void;
+  fetchRentDetails: (rentId: string) => void;
 }
 
 type TRentHistoryStore = IRentHistoryState & IRentHistoryActions;
@@ -28,6 +29,19 @@ export const useRentHistoryStore = create<TRentHistoryStore>((set) => ({
       const result = await carsApi.carsControllerGetCarRents();
 
       set({ rentHistory: result.data.rents });
+    } catch (error) {
+      handleError(error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+  fetchRentDetails: async (rentId) => {
+    try {
+      set({ isLoading: true });
+
+      const result = await carsApi.carsControllerGetCarRent(rentId);
+
+      set({ rent: result.data });
     } catch (error) {
       handleError(error);
     } finally {
