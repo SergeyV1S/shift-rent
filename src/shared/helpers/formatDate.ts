@@ -53,6 +53,13 @@ const formatToISO = (date: string) => {
   return formatISO9075(new Date(dateFromString), { representation: "date" });
 };
 
+export const formatDateRangeFromNumber = (from: number, to: number) => {
+  const startDate = new Date(from);
+  const endDate = new Date(to);
+
+  return formatDateRangeWithYear({ from: startDate, to: endDate });
+};
+
 export {
   formatDateRange,
   formatDayMonthDateRange,
