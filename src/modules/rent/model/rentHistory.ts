@@ -1,3 +1,6 @@
+import type { NavigateFunction } from "react-router";
+import { toast } from "sonner";
+
 import { create } from "zustand";
 
 import { type CarRent, getCars } from "@shared/api";
@@ -7,21 +10,27 @@ interface IRentHistoryState {
   rentHistory: CarRent[];
   rent?: CarRent;
   isLoading?: boolean;
+  isCancelModelOpen: boolean;
 }
 
 interface IRentHistoryActions {
-  setValue: <T extends keyof IRentHistoryState>(field: T, value: IRentHistoryState[T]) => void;
   fetchRentHistory: () => void;
-  fetchRentDetails: (rentId: string) => void;
+  fetchRentDetails: (carRentId: string) => void;
+  cancelRent: (carRentId: string, navigate: NavigateFunction) => void;
+  toggleCancelModelOpen: (value?: boolean) => void;
 }
 
 type TRentHistoryStore = IRentHistoryState & IRentHistoryActions;
 
 const carsApi = getCars();
 
-export const useRentHistoryStore = create<TRentHistoryStore>((set) => ({
+export const useRentHistoryStore = create<TRentHistoryStore>((set, get) => ({
   rentHistory: [],
-  setValue: (field, value) => set({ [field]: value }),
+  isCancelModelOpen: false,
+  toggleCancelModelOpen: (value) => {
+    const { isCancelModelOpen } = get();
+    set({ isCancelModelOpen: value ?? !isCancelModelOpen });
+  },
   fetchRentHistory: async () => {
     try {
       set({ isLoading: true });
@@ -35,13 +44,29 @@ export const useRentHistoryStore = create<TRentHistoryStore>((set) => ({
       set({ isLoading: false });
     }
   },
-  fetchRentDetails: async (rentId) => {
+  fetchRentDetails: async (carRentId) => {
     try {
       set({ isLoading: true });
 
-      const result = await carsApi.carsControllerGetCarRent(rentId);
+      const result = await carsApi.carsControllerGetCarRent(carRentId);
 
       set({ rent: result.data });
+    } catch (error) {
+      handleError(error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+  cancelRent: async (carRentId, navigate) => {
+    try {
+      set({ isLoading: true });
+
+      await carsApi.carsControllerCancelCarRent({ carRentId });
+
+      set({ isCancelModelOpen: false });
+
+      toast.success("Аренда успешно отменена!");
+      navigate(-1);
     } catch (error) {
       handleError(error);
     } finally {
