@@ -1,68 +1,29 @@
-const monthNames = [
-  "января",
-  "февраля",
-  "марта",
-  "апреля",
-  "мая",
-  "июня",
-  "июля",
-  "августа",
-  "сентября",
-  "октября",
-  "ноября",
-  "декабря"
-];
+import { addDays, differenceInDays, format, formatISO9075, isValid, parse } from "date-fns";
+import { ru } from "date-fns/locale";
 
 const formatDateRange = (range?: { from?: Date; to?: Date }) => {
-  if (!range?.from || !range?.to) return "";
+  if (!range?.from || !range?.to || !isValid(range.from) || !isValid(range.to)) return "";
 
-  const fromDay = range.from.getDate().toString().padStart(2, "0");
-  const toDay = range.to.getDate().toString().padStart(2, "0");
+  const daysDiff = differenceInDays(range.to, range.from) + 1;
 
-  const fromMonthName = monthNames[range.from.getMonth()];
-  const toMonthName = monthNames[range.to.getMonth()];
-
-  const year = range.to.getFullYear();
-
-  const daysDiff = getTimeDiff({
-    from: range.from,
-    to: range.to
-  });
-
-  return `${fromDay} ${fromMonthName !== toMonthName ? fromMonthName : ""} – ${toDay} ${toMonthName} ${year} (${daysDiff} ${getDayWord(+daysDiff)})`;
+  return `${format(range.from, "dd MMMM", { locale: ru })} – ${format(range.to, "dd MMMM yyyy", { locale: ru })} (${daysDiff} ${getDayWord(daysDiff)})`;
 };
 
 const formatDayMonthDateRange = (range?: { from?: Date; to?: Date }) => {
-  if (!range?.from || !range?.to) return "";
+  if (!range?.from || !range?.to || !isValid(range.from) || !isValid(range.to)) return "";
 
-  const fromDay = range.from.getDate().toString().padStart(2, "0");
-  const toDay = range.to.getDate().toString().padStart(2, "0");
-
-  const fromMonthName = monthNames[range.from.getMonth()];
-  const toMonthName = monthNames[range.to.getMonth()];
-
-  return `${fromDay} ${fromMonthName} – ${toDay} ${toMonthName}`;
+  return `${format(range.from, "dd MMMM", { locale: ru })} – ${format(range.to, "dd MMMM", { locale: ru })}`;
 };
 
 const formatDateRangeWithYear = (range?: { from?: Date; to?: Date }) => {
-  if (!range?.from || !range?.to) return "";
+  if (!range?.from || !range?.to || !isValid(range.from) || !isValid(range.to)) return "";
 
-  const fromDay = range.from.getDate().toString().padStart(2, "0");
-  const toDay = range.to.getDate().toString().padStart(2, "0");
-
-  const fromMonthName = monthNames[range.from.getMonth()];
-  const toMonthName = monthNames[range.to.getMonth()];
-  const fromYear = range.to.getFullYear();
-  const toYear = range.to.getFullYear();
-
-  return `${fromDay} ${fromMonthName} ${fromYear} – ${toDay} ${toMonthName} ${toYear}`;
+  return `${format(range.from, "dd MMMM yyyy", { locale: ru })} – ${format(range.to, "dd MMMM yyyy", { locale: ru })}`;
 };
 
 const getTimeDiff = (range?: { from?: Date; to?: Date }) => {
-  if (!range?.from || !range?.to) return 0;
-
-  const timeDiff = range.to.getTime() - range.from.getTime();
-  return Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+  if (!range?.from || !range?.to || !isValid(range.from) || !isValid(range.to)) return 0;
+  return differenceInDays(range.to, range.from) + 1;
 };
 
 const getDayWord = (count: number) => {
@@ -76,17 +37,29 @@ const getDayWord = (count: number) => {
 };
 
 const formatDateRangeForRequest = (rent?: { startDate?: number; endDate?: number }) => {
-  const format =
-    rent?.startDate && rent?.endDate
-      ? { from: new Date(rent.startDate), to: new Date(rent.endDate) }
-      : undefined;
-  return format;
+  if (!rent?.startDate || !rent?.endDate) return undefined;
+
+  const from = new Date(rent.startDate);
+  const to = new Date(rent.endDate);
+
+  return isValid(from) && isValid(to) ? { from, to } : undefined;
+};
+
+const getTomorrow = () => addDays(new Date(), 1);
+
+const formatToISO = (date: string) => {
+  const dateFromString = parse(date, "dd.MM.yyyy", new Date());
+
+  return formatISO9075(new Date(dateFromString), { representation: "date" });
 };
 
 export {
   formatDateRange,
-  getTimeDiff,
   formatDayMonthDateRange,
+  formatDateRangeWithYear,
+  getTimeDiff,
+  getDayWord,
   formatDateRangeForRequest,
-  formatDateRangeWithYear
+  getTomorrow,
+  formatToISO
 };

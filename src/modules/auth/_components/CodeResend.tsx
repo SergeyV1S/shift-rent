@@ -4,16 +4,17 @@ import { formatTime } from "@shared/helpers";
 import { Typography } from "@shared/ui";
 import { Button } from "@shared/ui";
 
-import { useAuth, useAuthStore } from "../model";
+import { useAuthStore } from "../model";
 
 export const CodeResend = () => {
-  const { retry } = useAuth();
-  const { retryDelay, isLoading } = useAuthStore();
+  const { retryDelay, phone, isLoading, sendOtp } = useAuthStore();
   const expiryDate = new Date(Date.now() + retryDelay!);
 
   const { minutes, seconds, restart } = useTimer({
     expiryTimestamp: expiryDate
   });
+
+  const retry = async () => sendOtp(phone);
 
   if (!seconds && !minutes)
     return (

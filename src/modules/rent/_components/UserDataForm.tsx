@@ -10,16 +10,16 @@ import type { TUserDataFormSchema } from "../lib";
 import { useCreateRentStore } from "../model";
 
 export const UserDataForm = () => {
-  const { createRentData, nextStep, prevStep, setUserData } = useCreateRentStore();
+  const { rentData, nextStep, prevStep, setUserData } = useCreateRentStore();
 
   const userDataForm = useForm<TUserDataFormSchema>({
     resolver: zodResolver(userDataFormSchema),
-    defaultValues: createRentData
+    defaultValues: rentData
   });
 
   const handleSubmit = (data: TUserDataFormSchema) => {
-    nextStep();
     setUserData(data);
+    nextStep();
   };
 
   return (

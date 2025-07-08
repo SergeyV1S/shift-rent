@@ -6,7 +6,7 @@ import type { DateRange } from "react-day-picker";
 import { ru } from "react-day-picker/locale";
 import "react-day-picker/style.css";
 
-import { formatDateRange } from "@shared/helpers";
+import { formatDateRange, getTomorrow } from "@shared/helpers";
 import { Label, Popover, Typography } from "@shared/ui";
 
 interface IDayPickerProps {
@@ -22,6 +22,8 @@ export const DayPicker = ({ defaultValue, onChange }: IDayPickerProps) => {
     onChange?.(selectedRange);
   };
 
+  const tomorrow = getTomorrow();
+
   return (
     <Label className='space-y-1'>
       Даты аренды
@@ -35,7 +37,14 @@ export const DayPicker = ({ defaultValue, onChange }: IDayPickerProps) => {
           </div>
         }
       >
-        <LibDayPicker mode='range' locale={ru} selected={range} onSelect={handleRangeSelect} />
+        <LibDayPicker
+          mode='range'
+          locale={ru}
+          animate
+          disabled={{ before: tomorrow }}
+          selected={range}
+          onSelect={handleRangeSelect}
+        />
       </Popover>
     </Label>
   );

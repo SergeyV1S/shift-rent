@@ -6,11 +6,11 @@ import { PatternFormat } from "react-number-format";
 import { Button, ErrorMessage, Input, Typography } from "@shared/ui";
 
 import { otpsFormSchema } from "../lib";
-import { useAuth, useAuthStore } from "../model";
+import type { TOtpsFormSchema } from "../lib";
+import { useAuthStore } from "../model";
 
 export const OtpsForm = () => {
-  const { isLoading } = useAuthStore();
-  const { onOtpsFormSubmit } = useAuth();
+  const { isLoading, sendOtp } = useAuthStore();
 
   const otpsForm = useForm({
     resolver: zodResolver(otpsFormSchema),
@@ -19,6 +19,8 @@ export const OtpsForm = () => {
       phone: ""
     }
   });
+
+  const onOtpsFormSubmit = (data: TOtpsFormSchema) => sendOtp(data.phone);
 
   return (
     <form
@@ -44,7 +46,7 @@ export const OtpsForm = () => {
         />
         <ErrorMessage message={otpsForm.formState.errors.phone?.message} />
       </div>
-      <Button type='submit' className='w-full' disabled={isLoading}>
+      <Button type='submit' className='w-full' isLoading={isLoading}>
         Продолжить
       </Button>
     </form>

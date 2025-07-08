@@ -40,8 +40,9 @@ export const RentHistoryPage = () => {
         </TableHeader>
         <TableContent>
           {!isLoading ? (
-            rentHistory.map((rent) => (
-              <TableRow>
+            // Fix
+            rentHistory.map((rent, index) => (
+              <TableRow key={index}>
                 <TableCell>{rent.carInfo.name}</TableCell>
                 <TableCell>{`${rent.startDate} - ${rent.endDate}`}</TableCell>
                 <TableCell>{rent.status}</TableCell>

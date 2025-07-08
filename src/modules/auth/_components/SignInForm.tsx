@@ -5,12 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, ErrorMessage, Input, Typography } from "@shared/ui";
 
 import { signInFormSchema } from "../lib";
-import { useAuth, useAuthStore } from "../model";
+import type { TSignInFormSchema } from "../lib";
+import { useAuthStore } from "../model";
 import { CodeResend } from "./CodeResend";
 
 export const SignInForm = () => {
-  const { phone, isLoading } = useAuthStore();
-  const { onSignInFormSubmit } = useAuth();
+  const { phone, isLoading, signIn } = useAuthStore();
+
+  const onSignInFormSubmit = (data: TSignInFormSchema) => signIn(data.code);
 
   const signInForm = useForm({
     resolver: zodResolver(signInFormSchema),
@@ -34,7 +36,7 @@ export const SignInForm = () => {
         <Input type='text' placeholder='Проверочный код' {...signInForm.register("code")} />
         <ErrorMessage message={signInForm.formState.errors.code?.message} />
       </div>
-      <Button type='submit' className='w-full' disabled={isLoading}>
+      <Button type='submit' className='w-full' isLoading={isLoading}>
         Войти
       </Button>
       <CodeResend />
