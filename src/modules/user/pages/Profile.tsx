@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PatternFormat } from "react-number-format";
 
+import { useAuthStore } from "@modules/auth";
+
 import { PATHS } from "@shared/constants";
 import { createRoute } from "@shared/lib";
 import { Button, ErrorMessage, Input, Label, Typography } from "@shared/ui";
@@ -13,7 +15,9 @@ import type { TUpdateProfileFormSchema } from "../lib";
 import { useUserStore } from "../model";
 
 export const ProfilePage = () => {
-  const { user, updateUser } = useUserStore();
+  const { user, isLoading, updateUser } = useUserStore();
+  const { logout } = useAuthStore();
+
   const updateProfileForm = useForm<TUpdateProfileFormSchema>({
     resolver: zodResolver(updateProfileFormSchema),
     defaultValues: user
@@ -80,10 +84,15 @@ export const ProfilePage = () => {
           <ErrorMessage message={updateProfileForm.formState.errors.city?.message} />
         </Label>
         <div className='max-xs:flex-col-reverse flex items-center justify-between gap-6'>
-          <Button type='button' variant='outline' className='max-xs:w-full'>
+          <Button type='button' variant='outline' className='max-xs:w-full' onClick={logout}>
             Выйти
           </Button>
-          <Button type='submit' className='max-xs:w-full' disabled={isSendButtonDisabled}>
+          <Button
+            type='submit'
+            className='max-xs:w-full'
+            isLoading={isLoading}
+            disabled={isSendButtonDisabled}
+          >
             Обновить данные
           </Button>
         </div>

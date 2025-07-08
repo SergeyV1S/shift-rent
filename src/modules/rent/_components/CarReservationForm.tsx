@@ -15,22 +15,22 @@ import { useCreateRentStore } from "../model";
 export const CarReservationForm = () => {
   const { rent } = useCarStore();
   const navigate = useNavigate();
-  const { createRentData, nextStep, setRentData } = useCreateRentStore();
+  const { rentData, nextStep, setRentData } = useCreateRentStore();
 
-  const formatedDateRange = formatDateRangeForRequest(rent || createRentData);
+  const formatedDateRange = formatDateRangeForRequest(rent || rentData);
 
   const carReservationForm = useForm<TCarReservationFormSchema>({
     resolver: zodResolver(carReservationFormSchema),
     defaultValues: {
       rentDate: formatedDateRange,
-      pickupLocation: createRentData.pickupLocation || "",
-      returnLocation: createRentData.returnLocation || ""
+      pickupLocation: rentData.pickupLocation || "",
+      returnLocation: rentData.returnLocation || ""
     }
   });
 
   const handleSubmit = (data: TCarReservationFormSchema) => {
-    nextStep();
     setRentData(data);
+    nextStep();
   };
 
   const goBack = () => navigate(-1);

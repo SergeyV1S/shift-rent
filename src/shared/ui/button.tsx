@@ -2,10 +2,11 @@ import { type VariantProps, cva } from "class-variance-authority";
 
 import { cn } from "@shared/lib";
 
+import { Spinner } from "./spinner";
 import { typographyVariants } from "./typography";
 
 const buttonVariants = cva(
-  "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap transition-all duration-300 outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap transition-all duration-300 outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -31,23 +32,33 @@ const buttonVariants = cva(
 
 interface IButtonProps extends React.ComponentProps<"button">, VariantProps<typeof buttonVariants> {
   typographyVariant?: VariantProps<typeof typographyVariants>["variant"];
+  isLoading?: boolean;
 }
 
 const Button = ({
   variant,
   typographyVariant = "button_semibold",
   className,
+  isLoading,
   size,
+  children,
+  disabled,
   ...props
-}: IButtonProps) => (
-  <button
-    data-slot='button'
-    className={cn(
-      buttonVariants({ variant, size, className }),
-      typographyVariants({ variant: typographyVariant })
-    )}
-    {...props}
-  />
-);
+}: IButtonProps) => {
+  const slot = isLoading ? <Spinner size={20} /> : children;
+
+  return (
+    <button
+      data-slot='button'
+      className={cn(
+        buttonVariants({ variant, size, className }),
+        typographyVariants({ variant: typographyVariant })
+      )}
+      disabled={disabled || isLoading}
+      children={slot}
+      {...props}
+    />
+  );
+};
 
 export { Button, buttonVariants };

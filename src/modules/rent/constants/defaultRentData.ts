@@ -1,4 +1,4 @@
-export const defaultCreateRentData = {
+export const defaultRentData = {
   carId: "",
   pickupLocation: "",
   returnLocation: "",

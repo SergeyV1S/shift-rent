@@ -1,15 +1,14 @@
 import { ClockIcon, LogInIcon, LogOutIcon, MoonIcon, UserRoundIcon } from "lucide-react";
 import { Link, NavLink } from "react-router";
 
-import { useAuth, useAuthStore } from "@modules/auth/model";
+import { useAuthStore } from "@modules/auth";
 
 import { PATHS } from "@shared/constants";
 import { cn } from "@shared/lib";
 import { Button, Typography, buttonVariants, typographyVariants } from "@shared/ui";
 
 export const Header = () => {
-  const { isAuth } = useAuthStore();
-  const { logout } = useAuth();
+  const { isAuth, logout } = useAuthStore();
 
   return (
     <header className='border-b-border-light border-b'>

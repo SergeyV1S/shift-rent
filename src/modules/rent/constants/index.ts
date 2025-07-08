@@ -1,2 +1,2 @@
 export * from "./steps";
-export * from "./defaultCreateRentData";
+export * from "./defaultRentData";

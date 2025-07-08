@@ -1,20 +1,21 @@
-import { toast } from "sonner";
+import type { NavigateFunction } from "react-router";
 
 import { create } from "zustand";
 
 import type { EStepsType } from "@modules/rent";
-import { ESteps, defaultCreateRentData, steps } from "@modules/rent/constants";
+import { ESteps, defaultRentData, steps } from "@modules/rent/constants";
 
 import { getCars } from "@shared/api";
 import type { CarRent, CreateRentDto } from "@shared/api";
-import { formatPhone, handleError } from "@shared/helpers";
+import { PATHS } from "@shared/constants";
+import { formatPhone, formatToISO, handleError } from "@shared/helpers";
 
 import type { TCarReservationFormSchema, TUserDataFormSchema } from "../lib";
 
 interface ICreateRentState {
   isLoading?: boolean;
   currentStep: EStepsType;
-  createRentData: CreateRentDto;
+  rentData: CreateRentDto;
   createdRent?: CarRent;
 }
 
@@ -25,7 +26,7 @@ interface ICreateRentActions {
   setRentData: (rentData: TCarReservationFormSchema) => void;
   setUserData: (userData: TUserDataFormSchema) => void;
   setCarId: (carId: string) => void;
-  createRent: () => void;
+  createRent: (navigate: NavigateFunction) => void;
 }
 
 type TCreateRentStore = ICreateRentState & ICreateRentActions;
@@ -34,13 +35,13 @@ const carsApi = getCars();
 
 export const useCreateRentStore = create<TCreateRentStore>((set, get) => ({
   currentStep: ESteps.CAR_RESERVATION,
-  createRentData: defaultCreateRentData,
+  rentData: defaultRentData,
   setCarId: (carId) => {
-    const { createRentData } = get();
+    const { rentData } = get();
 
     set({
-      createRentData: {
-        ...createRentData,
+      rentData: {
+        ...rentData,
         carId
       }
     });
@@ -58,39 +59,39 @@ export const useCreateRentStore = create<TCreateRentStore>((set, get) => ({
 
     set({ currentStep: steps[nextStepIndex] as EStepsType });
   },
-  setRentData: (rentData) => {
-    const { createRentData } = get();
+  setRentData: (rent) => {
+    const { rentData } = get();
     set({
-      createRentData: {
-        ...createRentData,
+      rentData: {
+        ...rentData,
         ...{
-          ...rentData,
-          startDate: rentData.rentDate?.from.getTime(),
-          endDate: rentData.rentDate?.to?.getTime() || rentData.rentDate?.from.getTime()
+          ...rent,
+          startDate: rent.rentDate?.from.getTime(),
+          endDate: rent.rentDate?.to?.getTime() || rent.rentDate?.from.getTime()
         }
       }
     });
   },
   setUserData: (userData) => {
-    const { createRentData } = get();
+    const { rentData } = get();
 
-    set({ createRentData: { ...createRentData, ...userData } });
+    set({ rentData: { ...rentData, ...userData } });
   },
-  createRent: async () => {
-    const { createRentData } = get();
+  createRent: async (navigate) => {
+    const { rentData } = get();
     try {
       set({ isLoading: true });
 
       const result = await carsApi.carsControllerCreateCarRent({
-        ...createRentData,
-        phone: formatPhone(createRentData.phone),
-        birthDate: createRentData.birthDate.split(".").reverse().join("-")
+        ...rentData,
+        phone: formatPhone(rentData.phone),
+        birthDate: formatToISO(rentData.birthDate)
       });
 
       set({ createdRent: result.data.rent });
-      set({ createRentData: defaultCreateRentData });
+      set({ rentData: defaultRentData });
 
-      toast.success("Машина забронирована!");
+      navigate(PATHS.REQUEST_SENT);
     } catch (error) {
       handleError(error);
     } finally {

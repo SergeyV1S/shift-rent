@@ -35,7 +35,7 @@ export const RequestSent = () => {
         </Typography>
       </div>
 
-      <article className='rounded-card border-border-light relative border'>
+      <article className='rounded-card border-border-light min-h[660px] relative border'>
         {createdRent && !isLoading && (
           <div className='space-y-6 px-12 py-6'>
             <div className='space-y-0.5'>

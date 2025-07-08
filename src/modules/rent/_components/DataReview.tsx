@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router";
 
 import { useCarStore } from "@modules/car";
 
-import { PATHS } from "@shared/constants";
 import { formatDateRange, formatDateRangeForRequest, getTimeDiff } from "@shared/helpers";
 import { Button, Typography } from "@shared/ui";
 
@@ -13,13 +12,13 @@ import { useCreateRentStore } from "../model";
 
 export const DataReview = () => {
   const navigate = useNavigate();
-  const { car, isLoading, fetchCar } = useCarStore();
-  const { createRentData, prevStep, moveToStep, createRent } = useCreateRentStore();
+  const carStore = useCarStore();
+  const { rentData, isLoading, prevStep, moveToStep, createRent } = useCreateRentStore();
   const { carId } = useParams() as { carId: string };
 
   const formatedDate = formatDateRangeForRequest({
-    startDate: createRentData.startDate,
-    endDate: createRentData.endDate
+    startDate: rentData.startDate,
+    endDate: rentData.endDate
   });
 
   const rentDates = formatDateRange(formatedDate);
@@ -27,12 +26,11 @@ export const DataReview = () => {
   const rentalDays = getTimeDiff(formatedDate);
 
   const onClickHandler = () => {
-    navigate(PATHS.REQUEST_SENT);
-    createRent();
+    createRent(navigate);
   };
 
   useEffect(() => {
-    fetchCar(carId);
+    carStore.fetchCar(carId);
   }, [carId]);
 
   return (
@@ -52,8 +50,8 @@ export const DataReview = () => {
             <div className='relative space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Автомобиль</Typography>
               <Typography className=''>
-                {!isLoading && car && car.name}
-                {isLoading && "Загружаем машинку..."}
+                {!carStore.isLoading && carStore.car && carStore.car.name}
+                {carStore.isLoading && "Загружаем машинку..."}
               </Typography>
             </div>
             <div className='space-y-0.5'>
@@ -64,11 +62,11 @@ export const DataReview = () => {
           <div className='space-y-6'>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Место получения</Typography>
-              <Typography>{createRentData.pickupLocation}</Typography>
+              <Typography>{rentData.pickupLocation}</Typography>
             </div>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Место возврата</Typography>
-              <Typography>{createRentData.returnLocation}</Typography>
+              <Typography>{rentData.returnLocation}</Typography>
             </div>
           </div>
         </div>
@@ -87,40 +85,48 @@ export const DataReview = () => {
           <div className='space-y-6'>
             <div className='relative space-y-0.5'>
               <Typography variant='paragraph_12_regular'>ФИО</Typography>
-              <Typography className=''>{`${createRentData.lastName} ${createRentData.firstName} ${createRentData.middleName}`}</Typography>
+              <Typography className=''>{`${rentData.lastName} ${rentData.firstName} ${rentData.middleName}`}</Typography>
             </div>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Дата рождения</Typography>
-              <Typography>{createRentData.birthDate}</Typography>
+              <Typography>{rentData.birthDate}</Typography>
             </div>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Номер телефона</Typography>
-              <Typography>{createRentData.phone}</Typography>
+              <Typography>{rentData.phone}</Typography>
             </div>
           </div>
           <div className='space-y-6'>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Электронная почта</Typography>
-              <Typography>{createRentData.email}</Typography>
+              <Typography>{rentData.email}</Typography>
             </div>
-            {createRentData.comment && (
+            {rentData.comment && (
               <div className='space-y-0.5'>
                 <Typography variant='paragraph_12_regular'>Комментарий</Typography>
-                <Typography>{createRentData.comment}</Typography>
+                <Typography>{rentData.comment}</Typography>
               </div>
             )}
           </div>
         </div>
       </div>
       <div className='w-full space-y-4 text-end'>
-        {car && <Typography variant='title_h3'>Итого: {rentalDays * car.price} ₽</Typography>}
+        {carStore.car && (
+          <Typography variant='title_h3'>Итого: {rentalDays * carStore.car.price} ₽</Typography>
+        )}
         <Typography>Аренда: {rentDates}</Typography>
       </div>
       <nav className='flex w-full items-center justify-between'>
-        <Button className='basis-1/3' type='button' variant='outline' onClick={prevStep}>
+        <Button
+          className='basis-1/3'
+          type='button'
+          variant='outline'
+          disabled={isLoading}
+          onClick={prevStep}
+        >
           Назад
         </Button>
-        <Button className='basis-1/3' type='submit' onClick={onClickHandler}>
+        <Button className='basis-1/3' isLoading={isLoading} type='submit' onClick={onClickHandler}>
           Забронировать
         </Button>
       </nav>
