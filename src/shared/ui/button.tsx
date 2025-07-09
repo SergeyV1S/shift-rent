@@ -18,7 +18,7 @@ const buttonVariants = cva(
         link: "hover:text-brand-primary/80"
       },
       size: {
-        default: "h-14 rounded-2xl px-8 py-4 has-[>svg]:px-3",
+        default: "h-14 rounded-2xl px-8 py-4 has-[>svg]:px-3 max-sm:text-sm",
         sm: "rounded-xl px-4 py-2.5 has-[>svg]:py-3",
         icon: "size-10 rounded-lg"
       }

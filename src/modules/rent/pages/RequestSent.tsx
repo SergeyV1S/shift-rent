@@ -63,7 +63,7 @@ export const RequestSent = () => {
         {isLoading && <Spinner />}
       </article>
 
-      <nav className='max-md:flex max-md:gap-3 md:space-x-6'>
+      <nav className='max-md:flex max-md:flex-col max-md:gap-3 md:space-x-6'>
         <Link
           to={PATHS.RENT_HISTORY}
           className={cn(buttonVariants({ variant: "outline" }), "w-1/3 max-md:w-full")}

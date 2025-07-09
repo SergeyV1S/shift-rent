@@ -1,5 +1,5 @@
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
-import { type JSX, useRef, useState } from "react";
+import { cloneElement, isValidElement, useRef, useState } from "react";
 
 import { useClickOutside } from "@shared/hooks";
 import { cn } from "@shared/lib";
@@ -7,7 +7,7 @@ import { cn } from "@shared/lib";
 import { typographyVariants } from "./typography";
 
 interface ISelectProps {
-  options: { value: string; label: string | JSX.Element }[];
+  options: { value: string; label: string | React.ReactElement<{ className?: string }> }[];
   value?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
@@ -50,7 +50,6 @@ export const Select = ({
         type='button'
         className={cn(
           "border-border-light transition-[ring, border] flex h-12 w-full cursor-pointer items-center justify-between rounded-md border px-3 py-2 duration-200 outline-none",
-          "focus:border-brand-primary focus:ring-brand-primary focus:ring-2",
           triggerClassName
         )}
         onClick={handleToggle}
@@ -86,8 +85,15 @@ export const Select = ({
                 onClick={(e) => handleSelect(e, option.value)}
               >
                 <div className='flex items-center justify-between'>
-                  <span className='block truncate'>{option.label}</span>
-                  {value === option.value && <CheckIcon className='text-base-text ml-2 h-4 w-4' />}
+                  {/* Да, логика в ui, но я пока не знаю как красиво это вынести) */}
+                  {typeof option.label === "string" ? (
+                    <span className='block truncate'>{option.label}</span>
+                  ) : isValidElement(option.label) ? (
+                    cloneElement(option.label, {
+                      className: cn("text-base-text", value === option.value && "text-white")
+                    })
+                  ) : null}
+                  {value === option.value && <CheckIcon className='ml-2 h-4 w-4 text-white' />}
                 </div>
               </li>
             ))}

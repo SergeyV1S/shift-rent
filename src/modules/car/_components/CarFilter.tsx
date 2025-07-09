@@ -135,7 +135,6 @@ export const CarFilter = () => {
                   filterStore.setValue("filters", { ...filters, bodyType: value as CarBodyType })
                 }
                 placeholder='Выберите тип кузова'
-                className='w-64'
               />
             </Label>
             <Label>
@@ -147,7 +146,6 @@ export const CarFilter = () => {
                   filterStore.setValue("filters", { ...filters, brand: value as CarBrand })
                 }
                 placeholder='Выберите бренд'
-                className='w-64'
               />
             </Label>
             <Label>
