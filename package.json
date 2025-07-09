@@ -29,6 +29,7 @@
     "react-router": "^7.6.3",
     "react-timer-hook": "^4.0.5",
     "sonner": "^2.0.5",
+    "vite-plugin-pwa": "^1.0.1",
     "zod": "^3.25.67",
     "zustand": "^5.0.6"
   },
