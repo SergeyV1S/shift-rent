@@ -15,18 +15,17 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["logo.svg"],
       srcDir: "src",
-      // filename: "sw.ts",
-      // strategies: "injectManifest",
-      // injectManifest: {
-      //   swDest: "dist/sw.js"
-      // },
+      filename: "sw.ts",
+      strategies: "injectManifest",
+      injectManifest: {
+        swDest: "dist/sw.js"
+      },
       manifest: {
         name: "Shift Rent | Car rent for you",
         short_name: "Shift Rent",
         lang: "ru-RU",
         display: "standalone",
         orientation: "portrait",
-        theme_color: "#ffffff",
         start_url: "/",
         icons: [
           {
