@@ -14,8 +14,10 @@ const HomePage = () => {
       <section className='flex flex-wrap items-center justify-center gap-10'>
         {!isLoading &&
           (cars.length === 0 ? (
-            <div className='bg-brand-primary rounded-2xl px-6 py-2 text-white'>
-              <Typography variant='paragraph_16_medium'>Ничего не найдено 😕</Typography>
+            <div className='bg-brand-primary rounded-2xl px-6 py-2'>
+              <Typography variant='paragraph_16_medium' className='text-white'>
+                Ничего не найдено 😕
+              </Typography>
             </div>
           ) : (
             cars.map((car) => <CarCard key={car.id} {...car} />)

@@ -26,7 +26,7 @@ export const Popover = ({
         type='button'
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
-          "rounded-input text-content-05 disabled:bg-bg-primary disabled:text-content-05 focus-visible:border-brand-primary border-border-light focus-visible:ring-brand-primary transition-[ring, border] h-12 w-full border bg-white p-3 duration-200 outline-none focus-visible:ring-2",
+          "rounded-input text-content-05 bg-bg-main disabled:bg-bg-primary disabled:text-content-05 focus-visible:border-brand-primary border-border-light focus-visible:ring-brand-primary transition-[ring, border] h-12 w-full border p-3 duration-200 outline-none focus-visible:ring-2",
           className
         )}
         {...props}
@@ -40,7 +40,7 @@ export const Popover = ({
       {isOpen && (
         <div
           className={cn(
-            "absolute left-1/2 z-50 w-fit -translate-x-1/2 rounded-md bg-white p-3 shadow-lg",
+            "bg-bg-main absolute left-1/2 z-50 w-fit -translate-x-1/2 rounded-md p-3 shadow-lg",
             isOpen ? "animate-slide-down" : "hidden"
           )}
         >

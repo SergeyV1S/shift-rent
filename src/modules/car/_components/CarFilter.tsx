@@ -121,7 +121,7 @@ export const CarFilter = () => {
         <div
           ref={advancedFiltersRef}
           className={cn(
-            "border-border-light absolute top-[118px] right-0 left-0 z-50 rounded-2xl border bg-white",
+            "border-border-light bg-bg-main absolute top-[118px] right-0 left-0 z-50 rounded-2xl border",
             isFiltersOpen ? "animate-slide-down" : "hidden"
           )}
         >

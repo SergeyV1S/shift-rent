@@ -92,7 +92,7 @@ const TabsTrigger = ({ className, value, children, ...props }: ITabsTriggerProps
         role='tab'
         aria-selected={activeTab === value}
         className={cn(
-          "transition-color cursor-pointer rounded-2xl px-12 py-3 whitespace-nowrap data-[active=true]:bg-white",
+          "transition-color data-[active=true]:bg-bg-main cursor-pointer rounded-2xl px-12 py-3 whitespace-nowrap",
           className
         )}
         data-active={activeTab === value}

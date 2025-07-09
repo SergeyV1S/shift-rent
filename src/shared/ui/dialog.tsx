@@ -47,7 +47,7 @@ export const Dialog = ({ children, isModalOpen, setIsModalOpen }: IDialogProps) 
         createPortal(
           <DialogOverview onClick={handleClose}>
             <div
-              className='relative w-full max-w-md rounded-4xl bg-white'
+              className='bg-bg-elevation relative w-full max-w-md rounded-4xl'
               onClick={(e) => e.stopPropagation()}
             >
               {Children.map(children, (child) => {
@@ -85,12 +85,7 @@ interface IDialogHeaderProps {
   children?: React.ReactNode;
 }
 export const DialogHeader = ({ title, onClose, children }: IDialogHeaderProps) => (
-  <div
-    className={cn(
-      "flex items-center justify-between",
-      title && "border-b-border-light border-b pb-4"
-    )}
-  >
+  <div className={cn("flex items-center justify-between", title && "pb-4")}>
     <Typography variant='title_h3' tag='h3'>
       {title || children}
     </Typography>

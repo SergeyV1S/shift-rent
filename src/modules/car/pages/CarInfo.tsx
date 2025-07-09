@@ -28,7 +28,7 @@ const CarInfoPage = () => {
   const rentalDays = getTimeDiff(formatedDateRange);
 
   return (
-    <div className=''>
+    <div className='space-y-6'>
       <Link
         to={PATHS.HOME}
         className='text-content-06 hover:text-brand-primary flex items-center gap-1 transition-colors duration-300'
