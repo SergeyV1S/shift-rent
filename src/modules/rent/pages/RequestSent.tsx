@@ -30,7 +30,7 @@ export const RequestSent = () => {
   return (
     <div className='mt-12 w-2/3 space-y-6 max-lg:w-full'>
       <div className='flex items-center gap-9'>
-        <img className='size-14 max-md:size-12' src='/accept.png' alt='accept icon' />
+        <img className='size-14 max-md:size-12' src='/accept.svg' alt='accept icon' />
         <Typography tag='h1' variant='title_h2'>
           Автомобиль забронирован
         </Typography>

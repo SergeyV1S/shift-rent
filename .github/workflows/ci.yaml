@@ -16,22 +16,22 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: yarn-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            yarn-${{ runner.os }}-
+      # - name: Cache dependencies
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: node_modules
+      #     key: yarn-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: |
+      #       yarn-${{ runner.os }}-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Save node_modules as artifact (optional)
-        uses: actions/upload-artifact@v4
-        with:
-          name: node_modules
-          path: node_modules
+      # - name: Save node_modules as artifact (optional)
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: node_modules
+      #     path: node_modules
 
   check-types:
     name: Check Types
