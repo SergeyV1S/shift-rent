@@ -38,7 +38,7 @@ export const DataReview = () => {
       <div className='rounded-card bg-border-light/20 w-full space-y-6'>
         <div className='relative grid w-full grid-cols-3 gap-6 px-12 py-6'>
           <Button
-            className='absolute top-5 right-5'
+            className='!absolute top-5 right-5'
             variant='ghost'
             size='icon'
             onClick={() => moveToStep(ESteps.CAR_RESERVATION)}
@@ -74,7 +74,7 @@ export const DataReview = () => {
       <div className='rounded-card bg-border-light/20 w-full space-y-6'>
         <div className='relative grid w-full grid-cols-3 gap-6 px-12 py-6'>
           <Button
-            className='absolute top-5 right-5'
+            className='!absolute top-5 right-5'
             variant='ghost'
             size='icon'
             onClick={() => moveToStep(ESteps.USER_DATA)}
