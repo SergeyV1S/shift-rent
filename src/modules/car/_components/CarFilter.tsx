@@ -94,12 +94,7 @@ export const CarFilter = () => {
         <div className='grid grid-cols-[repeat(2,1fr)_190px] items-end gap-4 p-6 max-md:grid-cols-1'>
           <Label className='space-y-1'>
             Поиск
-            <SearchInput
-              value={inputValue || ""}
-              onChange={handleChange}
-              className='bg-white'
-              placeholder='Поиск'
-            />
+            <SearchInput value={inputValue || ""} onChange={handleChange} placeholder='Поиск' />
           </Label>
           <DayPicker
             defaultValue={

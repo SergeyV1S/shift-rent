@@ -68,3 +68,15 @@
 .animate-slide-down {
   animation: slideDown 0.3s linear forwards;
 }
+
+.rdp-root {
+  --rdp-accent-color: var(--brand-primary);
+  --rdp-today-color: var(--brand-primary);
+  --rdp-range_middle-background-color: var(--stroke-primary);
+  --rdp-range_middle-color: black;
+}
+
+.rdp-nav {
+  display: flex;
+  gap: 24px;
+}

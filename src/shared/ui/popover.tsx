@@ -7,10 +7,12 @@ import { Typography } from "./typography";
 
 interface IPopoverProps extends React.ComponentProps<"button"> {
   placeholder?: React.ReactNode | string;
+  classNameContent?: string;
 }
 
 export const Popover = ({
   className,
+  classNameContent,
   placeholder = "Нажмите чтобы открыть",
   children,
   ...props
@@ -40,8 +42,9 @@ export const Popover = ({
       {isOpen && (
         <div
           className={cn(
-            "bg-bg-main absolute left-1/2 z-50 w-fit -translate-x-1/2 rounded-md p-3 shadow-lg",
-            isOpen ? "animate-slide-down" : "hidden"
+            "absolute left-1/2 z-50 w-fit -translate-x-1/2 rounded-md p-3 shadow-lg",
+            isOpen ? "animate-slide-down" : "hidden",
+            classNameContent
           )}
         >
           {children}
