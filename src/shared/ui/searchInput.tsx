@@ -13,7 +13,7 @@ export const SearchInput = ({ className, ...props }: React.ComponentProps<"input
   return (
     <div
       className={cn(
-        "group rounded-input placeholder:text-content-05 disabled:bg-bg-primary disabled:text-content-05 focus-visible:border-brand-primary border-border-light focus-visible:ring-brand-primary transition-[ring, border] flex items-center border px-3 duration-200 focus-visible:ring-2",
+        "group rounded-input placeholder:text-content-05 bg-bg-main disabled:bg-bg-primary disabled:text-content-05 focus-visible:border-brand-primary border-border-light focus-visible:ring-brand-primary transition-[ring, border] flex items-center border px-3 duration-200 focus-visible:ring-2",
         "focus-within:border-brand-primary focus-within:ring-brand-primary/80 transition-all duration-200 focus-within:ring-2",
         className
       )}

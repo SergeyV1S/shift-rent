@@ -94,12 +94,7 @@ export const CarFilter = () => {
         <div className='grid grid-cols-[repeat(2,1fr)_190px] items-end gap-4 p-6 max-md:grid-cols-1'>
           <Label className='space-y-1'>
             Поиск
-            <SearchInput
-              value={inputValue || ""}
-              onChange={handleChange}
-              className='bg-white'
-              placeholder='Поиск'
-            />
+            <SearchInput value={inputValue || ""} onChange={handleChange} placeholder='Поиск' />
           </Label>
           <DayPicker
             defaultValue={
@@ -121,7 +116,7 @@ export const CarFilter = () => {
         <div
           ref={advancedFiltersRef}
           className={cn(
-            "border-border-light absolute top-[118px] right-0 left-0 z-50 rounded-2xl border bg-white",
+            "border-border-light bg-bg-main absolute top-[118px] right-0 left-0 z-50 rounded-2xl border",
             isFiltersOpen ? "animate-slide-down" : "hidden"
           )}
         >
@@ -135,7 +130,6 @@ export const CarFilter = () => {
                   filterStore.setValue("filters", { ...filters, bodyType: value as CarBodyType })
                 }
                 placeholder='Выберите тип кузова'
-                className='w-64'
               />
             </Label>
             <Label>
@@ -147,7 +141,6 @@ export const CarFilter = () => {
                   filterStore.setValue("filters", { ...filters, brand: value as CarBrand })
                 }
                 placeholder='Выберите бренд'
-                className='w-64'
               />
             </Label>
             <Label>

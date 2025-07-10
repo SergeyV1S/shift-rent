@@ -5,7 +5,15 @@ import { Link, useParams } from "react-router";
 import { PATHS } from "@shared/constants";
 import { formatDateRangeForRequest, formatDayMonthDateRange, getTimeDiff } from "@shared/helpers";
 import { cn, createRoute } from "@shared/lib";
-import { Spinner, Typography, buttonVariants } from "@shared/ui";
+import {
+  Carousel,
+  CarouselButton,
+  CarouselContent,
+  CarouselItem,
+  Spinner,
+  Typography,
+  buttonVariants
+} from "@shared/ui";
 
 import {
   carBodyTypeTranslation,
@@ -28,7 +36,7 @@ const CarInfoPage = () => {
   const rentalDays = getTimeDiff(formatedDateRange);
 
   return (
-    <div className=''>
+    <div className='space-y-6'>
       <Link
         to={PATHS.HOME}
         className='text-content-06 hover:text-brand-primary flex items-center gap-1 transition-colors duration-300'
@@ -37,17 +45,35 @@ const CarInfoPage = () => {
         <Typography colorInherit>Назад</Typography>
       </Link>
       {car && !isLoading && (
-        <div className='flex justify-center gap-10'>
-          <div className='grid h-fit basis-1/2 grid-cols-3 gap-5'>
+        <div className='flex justify-center gap-10 max-md:flex-col'>
+          <div className='grid h-fit w-full basis-1/2 grid-cols-3 gap-5 max-md:hidden xl:max-w-[500px]'>
             {car.media.map((image, index) => (
               <img
                 className={cn("rounded-2xl", image.isCover && "order-first col-span-3")}
                 key={image.url}
                 src={`${process.env.BASE_API_URL}/api${image.url}`}
-                alt={`${car.name} ${index}`}
+                alt={`${car.name}-${index}`}
               />
             ))}
           </div>
+
+          <Carousel totalSlides={car.media.length} className='md:hidden'>
+            <CarouselContent>
+              {car.media.map((image, index) => (
+                <CarouselItem key={image.url}>
+                  <img
+                    key={image.url}
+                    className='rounded-2xl'
+                    src={`${process.env.BASE_API_URL}/api${image.url}`}
+                    alt={`${car.name}-${index}`}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselButton direction='prev' />
+            <CarouselButton direction='next' />
+          </Carousel>
+
           <div className='basis-1/2 space-y-8'>
             <Typography variant='title_h1' tag='h1'>
               {car.name}

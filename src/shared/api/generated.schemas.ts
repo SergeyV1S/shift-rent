@@ -349,6 +349,8 @@ export const CarRentStatus = {
 } as const;
 
 export interface CarRent {
+  /** Идентификатор аренды */
+  _id: string;
   /** Информация об автомобиле */
   carInfo: Car;
   /** Статус брони */

@@ -1,10 +1,11 @@
-import { ClockIcon, LogInIcon, LogOutIcon, MoonIcon, UserRoundIcon } from "lucide-react";
+import { ClockIcon, LogInIcon, LogOutIcon, UserRoundIcon } from "lucide-react";
 import { Link, NavLink } from "react-router";
 
 import { useAuthStore } from "@modules/auth";
 
 import { PATHS } from "@shared/constants";
 import { cn } from "@shared/lib";
+import { ThemeToggle } from "@shared/theme";
 import { Button, Typography, buttonVariants, typographyVariants } from "@shared/ui";
 
 export const Header = () => {
@@ -15,7 +16,7 @@ export const Header = () => {
       <nav
         className={cn(
           "container items-center py-4",
-          isAuth ? "grid grid-cols-[120px_1fr_200px]" : "flex justify-between"
+          isAuth ? "grid grid-cols-[120px_1fr_220px]" : "flex justify-between"
         )}
       >
         <Link className='flex items-center gap-1' to={PATHS.HOME}>
@@ -79,9 +80,7 @@ export const Header = () => {
               Войти
             </Link>
           )}
-          <Button variant='ghost' size='icon'>
-            <MoonIcon />
-          </Button>
+          <ThemeToggle />
         </div>
       </nav>
     </header>

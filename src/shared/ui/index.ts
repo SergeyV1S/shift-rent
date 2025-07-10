@@ -12,3 +12,5 @@ export * from "./range-slider";
 export * from "./color-picker";
 export * from "./day-picker";
 export * from "./progress";
+export * from "./dialog";
+export * from "./carousel";

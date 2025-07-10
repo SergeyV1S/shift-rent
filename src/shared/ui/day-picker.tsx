@@ -28,6 +28,7 @@ export const DayPicker = ({ defaultValue, onChange }: IDayPickerProps) => {
     <Label className='space-y-1'>
       Даты аренды
       <Popover
+        classNameContent='bg-bg-elevation'
         placeholder={
           <div className='flex items-center justify-between'>
             <Typography className='truncate'>
@@ -40,6 +41,7 @@ export const DayPicker = ({ defaultValue, onChange }: IDayPickerProps) => {
         <LibDayPicker
           mode='range'
           locale={ru}
+          className='bg-bg-elevation'
           animate
           disabled={{ before: tomorrow }}
           selected={range}

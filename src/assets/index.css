@@ -6,6 +6,8 @@
 }
 
 @theme inline {
+  --color-bg-main: var(--bg-main);
+  --color-bg-elevation: var(--bg-elevation);
   --color-bg-primary: var(--bg-primary);
   --color-indicator-positive: var(--indicator-positive);
   --color-stroke-primary: var(--stroke-primary);
@@ -34,6 +36,24 @@
   --content-06: rgba(151, 161, 175, 1);
   --content-05: rgba(99, 112, 131, 1);
   --content-03: rgba(52, 64, 81, 1);
+  --bg-main: rgba(255, 255, 255, 1);
+  --bg-elevation: rgba(255, 255, 255, 1);
+}
+
+.dark {
+  --indicator-positive: rgba(78, 207, 83, 1);
+  --indicator-error: rgba(246, 76, 76, 1);
+  --stroke-primary: rgba(224, 224, 224, 1);
+  --indicator-attention: rgba(253, 212, 66, 1);
+  --brand-primary: rgba(219, 0, 25, 1);
+  --bg-primary: rgba(52, 64, 81, 1);
+  --border-light: rgb(161, 164, 170);
+  --base-text: rgba(255, 255, 255, 1);
+  --content-06: rgba(151, 161, 175, 1);
+  --content-05: rgba(206, 210, 218, 1);
+  --content-03: rgba(239, 240, 241, 1);
+  --bg-main: rgba(20, 28, 36, 1);
+  --bg-elevation: rgba(35, 42, 50, 1);
 }
 
 @keyframes slideDown {
@@ -47,4 +67,16 @@
 
 .animate-slide-down {
   animation: slideDown 0.3s linear forwards;
+}
+
+.rdp-root {
+  --rdp-accent-color: var(--brand-primary);
+  --rdp-today-color: var(--brand-primary);
+  --rdp-range_middle-background-color: var(--stroke-primary);
+  --rdp-range_middle-color: black;
+}
+
+.rdp-nav {
+  display: flex;
+  gap: 24px;
 }

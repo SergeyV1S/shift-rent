@@ -1,5 +1,5 @@
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
-import { useRef, useState } from "react";
+import { cloneElement, isValidElement, useRef, useState } from "react";
 
 import { useClickOutside } from "@shared/hooks";
 import { cn } from "@shared/lib";
@@ -7,11 +7,12 @@ import { cn } from "@shared/lib";
 import { typographyVariants } from "./typography";
 
 interface ISelectProps {
-  options: { value: string; label: string }[];
+  options: { value: string; label: string | React.ReactElement<{ className?: string }> }[];
   value?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
   className?: string;
+  triggerClassName?: string;
   disabled?: boolean;
 }
 
@@ -21,6 +22,7 @@ export const Select = ({
   onChange,
   placeholder,
   className,
+  triggerClassName,
   disabled = false
 }: ISelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,20 +49,22 @@ export const Select = ({
       <button
         type='button'
         className={cn(
-          "border-border-light transition-[ring, border] flex h-12 w-full items-center justify-between rounded-md border px-3 py-2 duration-200 outline-none",
-          "focus:border-brand-primary focus:ring-brand-primary focus:ring-2"
+          "border-border-light transition-[ring, border] flex h-12 w-full cursor-pointer items-center justify-between rounded-md border px-3 py-2 duration-200 outline-none",
+          triggerClassName
         )}
         onClick={handleToggle}
         disabled={disabled}
       >
         <span className='truncate'>{selectedOption?.label || placeholder}</span>
-        <ChevronDownIcon className={cn("size-4 transition-transform", isOpen && "rotate-180")} />
+        <ChevronDownIcon
+          className={cn("text-base-text size-4 transition-transform", isOpen && "rotate-180")}
+        />
       </button>
 
       {isOpen && (
         <div
           className={cn(
-            "absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg",
+            "bg-bg-main absolute z-10 mt-1 w-full rounded-md shadow-lg",
             isOpen ? "animate-slide-down" : "hidden"
           )}
         >
@@ -74,15 +78,22 @@ export const Select = ({
               <li
                 key={option.value}
                 className={cn(
-                  "hover:bg-brand-primary/10 relative cursor-pointer rounded-md px-3 py-2 select-none",
+                  "hover:bg-brand-primary/20 relative cursor-pointer rounded-md px-3 py-2 select-none",
                   value === option.value &&
                     "bg-brand-primary/70 hover:bg-brand-primary/70 text-white"
                 )}
                 onClick={(e) => handleSelect(e, option.value)}
               >
-                <div className='flex items-center'>
-                  <span className='block truncate'>{option.label}</span>
-                  {value === option.value && <CheckIcon className='ml-2 h-4 w-4' />}
+                <div className='flex items-center justify-between'>
+                  {/* Да, логика в ui, но я пока не знаю как красиво это вынести) */}
+                  {typeof option.label === "string" ? (
+                    <span className='block truncate'>{option.label}</span>
+                  ) : isValidElement(option.label) ? (
+                    cloneElement(option.label, {
+                      className: cn("text-base-text", value === option.value && "text-white")
+                    })
+                  ) : null}
+                  {value === option.value && <CheckIcon className='ml-2 h-4 w-4 text-white' />}
                 </div>
               </li>
             ))}

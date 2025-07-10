@@ -57,7 +57,7 @@ const TabsList = ({ className, children, ...props }: ITabsListProps) => (
     data-slot='tabs-list'
     role='tablist'
     className={cn(
-      "bg-bg-primary inline-flex w-fit items-center justify-center rounded-2xl p-1",
+      "bg-bg-primary inline-flex w-full items-center justify-center rounded-2xl p-1 max-sm:flex-col",
       className
     )}
     {...props}
@@ -92,7 +92,7 @@ const TabsTrigger = ({ className, value, children, ...props }: ITabsTriggerProps
         role='tab'
         aria-selected={activeTab === value}
         className={cn(
-          "transition-color cursor-pointer rounded-2xl px-12 py-3 whitespace-nowrap data-[active=true]:bg-white",
+          "transition-color data-[active=true]:bg-bg-main w-full cursor-pointer rounded-2xl py-3",
           className
         )}
         data-active={activeTab === value}

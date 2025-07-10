@@ -7,6 +7,7 @@ import { formatDateRangeForRequest, formatDateRangeWithYear } from "@shared/help
 import { cn, createRoute } from "@shared/lib";
 import { Spinner, Typography, buttonVariants } from "@shared/ui";
 
+import { ViewStatus } from "../_components";
 import { useCreateRentStore } from "../model";
 
 export const RequestSent = () => {
@@ -29,7 +30,7 @@ export const RequestSent = () => {
   return (
     <div className='mt-12 w-2/3 space-y-6 max-lg:w-full'>
       <div className='flex items-center gap-9'>
-        <img className='size-14 max-md:size-12' src='/accept.png' alt='accept icon' />
+        <img className='size-14 max-md:size-12' src='/accept.svg' alt='accept icon' />
         <Typography tag='h1' variant='title_h2'>
           Автомобиль забронирован
         </Typography>
@@ -40,7 +41,7 @@ export const RequestSent = () => {
           <div className='space-y-6 px-12 py-6'>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Статус</Typography>
-              <Typography>{createdRent.status}</Typography>
+              <ViewStatus status={createdRent.status} />
             </div>
             <div className='space-y-0.5'>
               <Typography variant='paragraph_12_regular'>Даты брони</Typography>
@@ -62,7 +63,7 @@ export const RequestSent = () => {
         {isLoading && <Spinner />}
       </article>
 
-      <nav className='max-md:flex max-md:gap-3 md:space-x-6'>
+      <nav className='max-md:flex max-md:flex-col max-md:gap-3 md:space-x-6'>
         <Link
           to={PATHS.RENT_HISTORY}
           className={cn(buttonVariants({ variant: "outline" }), "w-1/3 max-md:w-full")}

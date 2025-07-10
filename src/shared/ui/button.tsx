@@ -11,14 +11,14 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: "bg-brand-primary hover:bg-brand-primary/90 active:bg-brand-primary/80 text-white",
-        secondary: "bg-content-03 hover:bg-content-03/90 active:bg-content-03/80 text-white",
+        secondary: "bg-content-03 hover:bg-content-03/90 active:bg-content-03/80 text-bg-main",
         outline:
           "bg-transaprent hover:bg-content-03/10 active:bg-content-03/15 border-border-light text-content-03 border",
         ghost: "hover:bg-content-06/10 active:bg-content-05/15",
         link: "hover:text-brand-primary/80"
       },
       size: {
-        default: "h-14 rounded-2xl px-8 py-4 has-[>svg]:px-3",
+        default: "h-14 rounded-2xl px-8 py-4 has-[>svg]:px-3 max-sm:text-sm",
         sm: "rounded-xl px-4 py-2.5 has-[>svg]:py-3",
         icon: "size-10 rounded-lg"
       }
